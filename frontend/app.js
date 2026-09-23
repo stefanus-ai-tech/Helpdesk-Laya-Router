@@ -2,7 +2,7 @@ const $ = (selector) => document.querySelector(selector);
 const departments = ['Billing', 'Technical Support', 'Account Support', 'Sales', 'General Support'];
 const intents = ['Refund Request', 'Payment Problem', 'Bug Report', 'Login Problem', 'Account Change', 'Cancellation', 'Feature Request', 'Product Question', 'Sales Inquiry', 'Other'];
 const urgencies = ['Low', 'Medium', 'High', 'Critical'];
-const state = { view: 'overview', tickets: [], analytics: null, evaluation: null, selected: null, mode: null, reelScene: 0, page: 0 };
+const state = { view: 'overview', tickets: [], analytics: null, evaluation: null, selected: null, mode: null, cudaAvailable: null, reelScene: 0, page: 0 };
 const labels = { INCOMING: 'Incoming', AUTO_ROUTED: 'Auto-routed', NEEDS_REVIEW: 'Needs review', APPROVED: 'Approved', CORRECTED: 'Corrected' };
 const pageInfo = {
   overview: ['YOUR WORKSPACE AT A GLANCE', 'Ticket activity', 'See what needs attention and where every request is headed.', 'Overview'],
@@ -26,12 +26,12 @@ async function refresh() {
     const [tickets, analytics, evaluation, health] = await Promise.all([
       api('/api/tickets?limit=500'), api('/api/analytics'), api('/api/evaluation'), api('/api/health')
     ]);
-    Object.assign(state, {tickets, analytics, evaluation, mode: health.mode});
+    Object.assign(state, {tickets, analytics, evaluation, mode: health.mode, cudaAvailable: health.cuda_available});
     render();
   } catch (error) { toast(error.message); }
 }
 function render() {
-  $('#mode-pill').textContent = state.mode === 'demo' ? 'Demo simulation' : 'Laya · CUDA';
+  $('#mode-pill').textContent = state.mode === 'demo' ? 'Demo simulation' : state.cudaAvailable === false ? 'Laya · CUDA unavailable' : 'Laya · CUDA';
   const counts = state.analytics?.statuses || {};
   $('#stat-total').textContent = state.analytics?.total ?? '—';
   $('#stat-routed').textContent = counts.AUTO_ROUTED || 0;
@@ -90,6 +90,12 @@ function renderEvaluation() {
   const metrics = [['Department accuracy',e.department_accuracy],['Intent accuracy',e.intent_accuracy],['Urgency accuracy',e.urgency_accuracy],['Wrong auto-route rate',e.wrong_auto_route_rate]];
   const matrixLabels = Object.keys(e.confusion_matrix);
   $('#evaluation-content').innerHTML = `<div class="eval-grid">${metrics.map(([name,value]) => `<div class="eval-card"><small>${safe(name)}</small><strong>${percent(value)}</strong></div>`).join('')}</div><div class="eval-detail"><div><h4>Signal quality</h4><table class="metrics-table"><thead><tr><th>DETECTION</th><th>PRECISION</th><th>RECALL</th><th>F1</th></tr></thead><tbody>${['refund','churn'].map(name => `<tr><td>${name === 'refund' ? 'Refund request' : 'Churn risk'}</td><td>${percent(e[name].precision)}</td><td>${percent(e[name].recall)}</td><td>${percent(e[name].f1)}</td></tr>`).join('')}</tbody></table><p>${e.evaluated} evaluated · Auto-route ${percent(e.auto_route_rate)} · Human review ${percent(e.human_review_rate)} · Avg. confidence ${percent(e.average_department_confidence)}</p><p>Prediction sources: ${Object.entries(e.prediction_sources).map(([k,v]) => `${safe(k)} ${v}`).join(', ')}. Ground truth: ${Object.entries(e.truth_origins).map(([k,v]) => `${safe(k)} ${v}`).join(', ')}.</p></div><div><h4>Department confusion matrix</h4><div class="matrix"><table><thead><tr><th>ACTUAL ↓ / PREDICTED →</th>${matrixLabels.map(x => `<th>${safe(x.split(' ')[0])}</th>`).join('')}</tr></thead><tbody>${matrixLabels.map(actual => `<tr><td>${safe(actual)}</td>${matrixLabels.map(pred => `<td class="${actual === pred ? 'diag' : ''}">${e.confusion_matrix[actual][pred]}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div></div>`;
+  $('#evaluation-content .eval-card:last-child small').textContent = `Wrong auto-route rate (n=${e.auto_routed_count})`;
+  if (e.critical_support) {
+    const note = document.createElement('p');
+    note.textContent = `Critical recall on ${e.critical_support} labeled incidents: model ${percent(e.model_critical_recall)} · operational P1 after safety rules ${percent(e.operational_p1_recall)}.`;
+    $('#evaluation-content .eval-detail > div:first-child').appendChild(note);
+  }
 }
 function setView(view) { state.view = view; state.page = 0; if (view === 'overview' || view === 'evaluation') $('#status-filter').value = ''; render(); window.scrollTo({top:0,behavior:'smooth'}); }
 async function openTicket(id) {
@@ -103,7 +109,7 @@ function renderDetail() {
   $('#detail-id').textContent = t.id;
   const classified = Boolean(t.department);
   const source = t.source === 'simulation' ? 'Demo simulation · deterministic preview, not model inference' : t.source === 'laya' ? `Laya model · ${t.model} · CUDA` : 'Awaiting classification';
-  const gateText = {auto_route:'High confidence: routed automatically.',human_confirmation:'Medium confidence: human confirmation required.',manual_triage:'Low confidence: manual triage required.',critical_escalation:'Critical priority: senior human review required.',senior_confirmation:'Escalation signal: senior confirmation required.',human_approved:'Human approved this prediction.',human_corrected:'Human correction saved as ground truth.'}[t.gate] || 'Awaiting a routing decision.';
+  const gateText = {auto_route:'High confidence: routed automatically.',human_confirmation:'Medium confidence: human confirmation required.',manual_triage:'Low confidence: manual triage required.',critical_escalation:'Critical priority: senior human review required.',policy_critical:'Safety rule detected a severe incident: P1 human review.',senior_confirmation:'Escalation signal: senior confirmation required.',policy_escalation:'Cancellation language detected: senior human review required.',refund_conflict:'Refund negation conflicts with model signal: human review required.',human_approved:'Human approved this prediction.',human_corrected:'Human correction saved as ground truth.'}[t.gate] || 'Awaiting a routing decision.';
   $('#drawer-body').innerHTML = `<h3 class="detail-subject">${safe(t.subject)}</h3><div class="detail-meta"><span class="detail-chip">${safe(labels[t.status] || t.status)}</span><span class="detail-chip">${safe(t.customer_tier)}</span><span class="detail-chip">${safe(t.source_channel || 'Web')}</span></div><section class="detail-section"><h3>CUSTOMER MESSAGE</h3><p class="customer-message">${safe(t.body)}</p></section><section class="detail-section"><h3>${state.mode === 'demo' ? 'DEMO TRIAGE' : 'AI TRIAGE'}</h3>${classified ? `${metricRow('Department',t.department,t.department_confidence)}<div class="confidence-meter"><span style="width:${Math.round(t.department_confidence*100)}%"></span></div>${metricRow('Intent',t.intent,t.intent_confidence)}${metricRow('Urgency',t.urgency,t.urgency_confidence)}${metricRow('Frustration',['Neutral','Mild','Frustrated','High'][t.frustration],t.frustration_confidence)}${metricRow('Refund requested',percent(t.refund_probability))}${metricRow('Churn risk',percent(t.churn_probability))}${metricRow('Human escalation',percent(t.escalation_probability))}` : '<p class="source-note">Classify this ticket to see a decision.</p>'}<p class="source-note">${safe(source)}</p></section><section class="detail-section"><h3>ROUTING DECISION</h3><div class="gate-card"><strong>${safe(t.queue || 'Not yet assigned')} ${t.priority ? '· ' + safe(t.priority) : ''}</strong><p>${safe(gateText)}</p></div><div class="detail-actions"><button class="button button-primary" id="detail-classify">${classified ? (state.mode === 'demo' ? 'Re-run simulation →' : 'Reclassify with Laya →') : (state.mode === 'demo' ? 'Simulate routing →' : 'Classify ticket →')}</button>${classified ? '<button class="button button-subtle" id="detail-approve">Approve</button><button class="button button-subtle" id="detail-correct">Correct</button>' : ''}</div><p class="source-note">Tags: ${t.tags.length ? t.tags.map(safe).join(' · ') : 'None'}<br>Classification recommends routing only. Refunds, cancellation, and account changes require separate human action.</p></section>`;
   $('#detail-classify').onclick = () => classify(t.id);
   if (classified) { $('#detail-approve').onclick = () => approve(t.id); $('#detail-correct').onclick = () => openCorrection(t); }

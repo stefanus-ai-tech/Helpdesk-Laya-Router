@@ -25,6 +25,7 @@ def calculate(rows: list[dict]) -> dict:
         matrix[r["actual_department"]][r["pred_department"]] += 1
     auto = [r for r in rows if r["status"] == "AUTO_ROUTED"]
     wrong_auto = sum(r["pred_department"] != r["actual_department"] for r in auto)
+    critical = [r for r in rows if r["actual_urgency"] == "Critical"]
     return {
         "evaluated": n,
         "department_accuracy": accuracy("department"),
@@ -36,6 +37,11 @@ def calculate(rows: list[dict]) -> dict:
         "auto_route_rate": round(len(auto) / n, 3),
         "human_review_rate": round((n - len(auto)) / n, 3),
         "wrong_auto_route_rate": round(wrong_auto / len(auto), 3) if auto else 0.0,
+        "auto_routed_count": len(auto),
+        "wrong_auto_route_count": wrong_auto,
+        "critical_support": len(critical),
+        "model_critical_recall": round(sum(r["pred_urgency"] == "Critical" for r in critical) / len(critical), 3) if critical else None,
+        "operational_p1_recall": round(sum(r["priority"] == "P1" for r in critical) / len(critical), 3) if critical else None,
         "average_department_confidence": round(sum(r["department_confidence"] for r in rows) / n, 3),
         "confusion_matrix": matrix,
         "truth_origins": dict(Counter(r["origin"] for r in rows)),

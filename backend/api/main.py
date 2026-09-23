@@ -149,7 +149,7 @@ def classify_ticket(ticket_id: str):
         prediction = classifier.predict(ticket)
     except Exception as exc:
         raise HTTPException(503, f"Laya inference unavailable: {exc}") from exc
-    route = decide(prediction, ticket["customer_tier"])
+    route = decide(prediction, ticket["customer_tier"], ticket["subject"] + " " + ticket["body"])
     with connection() as db:
         db.execute("""INSERT INTO predictions (ticket_id, department, department_confidence, intent,
             intent_confidence, urgency, urgency_confidence, frustration, frustration_confidence,
@@ -222,7 +222,7 @@ def analytics():
 @app.get("/api/evaluation")
 def evaluation():
     with connection() as db:
-        rows = [dict(r) for r in db.execute("""SELECT t.status, p.department pred_department,
+        rows = [dict(r) for r in db.execute("""SELECT t.status, t.priority, p.department pred_department,
             p.intent pred_intent, p.urgency pred_urgency, p.refund_probability, p.churn_probability,
             p.escalation_probability, p.department_confidence, p.source, g.department actual_department,
             g.intent actual_intent, g.urgency actual_urgency, g.refund actual_refund, g.churn actual_churn,

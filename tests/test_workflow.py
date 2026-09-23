@@ -21,6 +21,25 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(decide({**base, "department_confidence": .48})["gate"], "manual_triage")
         self.assertEqual(decide({**base, "urgency": "Critical"}, "Enterprise")["queue"], "Senior Support")
 
+    def test_policy_reviews_model_misses_without_changing_model_score(self):
+        base = {"department": "Billing", "department_confidence": .93, "urgency": "High",
+                "refund_probability": .84, "churn_probability": .62, "escalation_probability": .20}
+        refund = decide(base, text="I don't want a refund. Explain this duplicate charge.")
+        self.assertEqual(refund["gate"], "refund_conflict")
+        self.assertNotIn("refund-request", refund["tags"])
+        churn = decide(base, text="Fix this or we're cancelling our plan.")
+        self.assertEqual(churn["gate"], "policy_escalation")
+        self.assertIn("cancellation-language-review", churn["tags"])
+
+    def test_policy_catches_explicit_outage_without_rewriting_model_urgency(self):
+        prediction = {"department": "Technical Support", "department_confidence": .92,
+                      "urgency": "Medium", "refund_probability": .02, "churn_probability": .04,
+                      "escalation_probability": .12}
+        route = decide(prediction, text="Our production API is down and customers cannot checkout.")
+        self.assertEqual(route["priority"], "P1")
+        self.assertEqual(route["gate"], "policy_critical")
+        self.assertEqual(prediction["urgency"], "Medium")
+
     def test_laya_normalization(self):
         result = {"routing": {"model": "english"}, "answers": {
             "department": {"choice": "Billing", "confidence": .91},
@@ -87,6 +106,8 @@ class ApiTests(unittest.TestCase):
         metrics = self.client.get("/api/evaluation").json()
         self.assertEqual(metrics["evaluated"], 3)
         self.assertEqual(metrics["prediction_sources"], {"simulation": 3})
+        self.assertEqual(metrics["critical_support"], 1)
+        self.assertEqual(metrics["operational_p1_recall"], 1.0)
         self.assertEqual(self.client.get("/api/dataset.csv").status_code, 200)
 
     def test_new_ticket_create_then_classify(self):
