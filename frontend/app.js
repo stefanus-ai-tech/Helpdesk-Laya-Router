@@ -48,6 +48,7 @@ function renderView() {
   $('#section-desc').textContent = desc;
   $('#breadcrumb').textContent = crumb;
   $('#hero').hidden = state.view !== 'overview';
+  $('#batch-strip').hidden = state.view !== 'overview';
   $('#overview-grid').hidden = state.view !== 'overview';
   $('#evaluation-panel').hidden = state.view !== 'evaluation';
   $('#tickets-panel').hidden = state.view === 'evaluation';
@@ -130,6 +131,12 @@ function openCorrection(t) {
   $('#correct-dialog').showModal();
 }
 function openCreate() { $('#create-dialog').showModal(); }
+function openBatch() {
+  $('#batch-status').textContent = state.mode === 'demo'
+    ? 'Open the Laya CUDA server to create a real classified workbook. Demo mode cannot export simulated predictions.'
+    : 'Laya will classify every row on CUDA and create a five-sheet Excel report.';
+  $('#batch-dialog').showModal();
+}
 const reelScenes = [
   {id:'TCK-0001',caption:'01 / Duplicate charge → Billing'},
   {id:'TCK-0021',caption:'02 / Production outage → P1 review'},
@@ -148,6 +155,7 @@ function exitReel() { document.body.classList.remove('reel-mode'); $('#reel-cont
 document.querySelectorAll('.nav-link').forEach(node => node.onclick = () => setView(node.dataset.view));
 document.querySelectorAll('[data-goto]').forEach(node => node.onclick = () => setView(node.dataset.goto));
 document.querySelectorAll('#open-create,#hero-create,#open-create-side').forEach(node => node.onclick = openCreate);
+document.querySelectorAll('#open-batch,#hero-batch').forEach(node => node.onclick = openBatch);
 $('#hero-demo').onclick = startReel;
 $('#reel-next').onclick = nextReelScene; $('#reel-exit').onclick = exitReel;
 $('#refresh-button').onclick = refresh;
@@ -157,6 +165,7 @@ $('#recent-list').onclick = event => { const node = event.target.closest('[data-
 $('#ticket-table').onclick = event => { const node = event.target.closest('[data-ticket]'); if (node) openTicket(node.dataset.ticket); };
 $('#close-drawer').onclick = closeDrawer; $('#drawer-backdrop').onclick = closeDrawer;
 $('#close-create').onclick = $('#cancel-create').onclick = () => $('#create-dialog').close();
+$('#close-batch').onclick = $('#cancel-batch').onclick = () => $('#batch-dialog').close();
 $('#close-correct').onclick = $('#cancel-correct').onclick = () => $('#correct-dialog').close();
 $('#create-form').onsubmit = async event => {
   event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form));
@@ -167,6 +176,63 @@ $('#correct-form').onsubmit = async event => {
   event.preventDefault(); const form = event.currentTarget; const payload = {department:form.elements.department.value,intent:form.elements.intent.value,urgency:form.elements.urgency.value,refund:form.elements.refund.checked,churn:form.elements.churn.checked,escalation:form.elements.escalation.checked};
   try { state.selected = await api(`/api/tickets/${encodeURIComponent(state.selected.id)}/correct`,{method:'POST',body:JSON.stringify(payload)}); $('#correct-dialog').close(); await refresh(); renderDetail(); toast('Human correction saved as ground truth.'); }
   catch (error) { toast(error.message); }
+};
+$('#batch-form').onsubmit = async event => {
+  event.preventDefault();
+  const file = $('#batch-file').files[0];
+  if (!file) return;
+  const button = $('#batch-submit');
+  const progress = $('#batch-progress');
+  const note = $('#batch-progress-note');
+  button.disabled = true;
+  button.textContent = 'Starting Laya…';
+  progress.hidden = false;
+  progress.value = 0;
+  note.hidden = false;
+  note.textContent = file.name;
+  $('#batch-status').textContent = 'Preparing CSV batch…';
+  try {
+    const response = await fetch('/api/batches/jobs', {method:'POST', headers:{'Content-Type':'text/csv'}, body:file});
+    if (!response.ok) {
+      const problem = await response.json().catch(() => ({}));
+      throw new Error(problem.detail || `Batch failed (${response.status})`);
+    }
+    let job = await response.json();
+    while (true) {
+      progress.max = job.total;
+      progress.value = job.processed;
+      $('#batch-status').textContent = `Processing ${job.processed} / ${job.total} tickets`;
+      note.textContent = job.current_ticket ? `Latest: ${job.current_ticket}` : file.name;
+      button.textContent = `${job.processed} / ${job.total}`;
+      if (job.status === 'complete') break;
+      if (job.status === 'failed') throw new Error(job.error || 'Laya batch failed');
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      job = await api(`/api/batches/jobs/${encodeURIComponent(job.job_id)}`);
+    }
+    $('#batch-status').textContent = `Finished ${job.processed} / ${job.total} tickets. Preparing Excel…`;
+    const download = await fetch(`/api/batches/jobs/${encodeURIComponent(job.job_id)}/download`);
+    if (!download.ok) {
+      const problem = await download.json().catch(() => ({}));
+      throw new Error(problem.detail || `Download failed (${download.status})`);
+    }
+    const url = URL.createObjectURL(await download.blob());
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'LayaDesk_Batch_Report.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    $('#batch-status').textContent = `Done: ${job.processed} / ${job.total} tickets. Excel is downloading.`;
+    note.textContent = 'Batch complete';
+    toast('Laya batch report is ready.');
+  } catch (error) {
+    $('#batch-status').textContent = error.message;
+    toast(error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Classify & download Excel →';
+  }
 };
 document.addEventListener('keydown', event => { if (event.key === 'Escape') closeDrawer(); });
 refresh().then(() => { if (new URLSearchParams(location.search).has('reels')) startReel(); });

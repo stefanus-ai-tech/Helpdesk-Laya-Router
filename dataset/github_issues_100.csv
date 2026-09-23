@@ -1,0 +1,2021 @@
+ticket_id,subject,body,customer_id,customer_tier,product,source_channel,created_at,repo_name,issue_url,issue_state,github_labels
+GH-840868902,error while loading shared libraries: libatomic.so.1: cannot open shared object file: No such file or directory,"<!--
+Please fill out this entire template so that we can address your bug report as quickly as possible.
+
+Any bug reports that don't contain instructions to reproduce the issue will be closed.
+-->
+
+Flow version: 0.147.0
+
+## Expected behavior
+
+flow should run without errors
+
+## Actual behavior
+
+when I run Flow on my GitHub Workflow I get:
+
+```
+/github/workspace/node_modules/flow-bin/flow-linux64-v0.147.0/flow: error while loading shared libraries: libatomic.so.1: cannot open shared object file: No such file or directory
+```
+
+See https://github.com/popperjs/react-popper/runs/2192949490
+
+<!--
+Please reproduce your issue on flow.org/try so that we can debug it.
+
+Not all issues are reproducible on try-flow because they may require multiple
+files or specific flowconfig settings. If your bug can only be reproduced
+under one of these constraints, please make a small github repo that
+contains a minimal way to reproduce your problem.
+-->
+* Link to Try-Flow or Github repo: N/A",FezVrasta,Standard,facebook/flow,GitHub Issue,2021-03-25T12:15:34Z,facebook/flow,https://github.com/facebook/flow/issues/8628,closed,"bug, needs triage"
+GH-562077705,Fish operator displays as greater than or equal followed by greater than,"The fish operator `>=>` displays as `≥>`
+Disabling the ligature in that case would be a good first solution.
+
+Thanks.",dam5s,Standard,JetBrains/JetBrainsMono,GitHub Issue,2020-02-08T21:04:12Z,JetBrains/JetBrainsMono,https://github.com/JetBrains/JetBrainsMono/issues/134,closed,bug
+GH-2273480553,Shows Nothing for Sensors Widget,"On a fresh Mac and fresh install, I  go to Sensors and enable it and also enable any subsystem like fans or temperature. Nothing shows up in the widget.
+
+The 2.10.11 has this issue but 2.10.10 is fine.
+
+**Details:**
+ - Device: MacBook Pro M2 Pro 14""
+ - macOS: Sonoma 14.4.1
+ - Application version: 2.10.11
+ 
+<img width=""749"" alt=""Screenshot 2024-05-01 at 8 59 49 PM"" src=""https://github.com/exelban/stats/assets/32928433/10475d5f-c7f3-49b0-81a4-6ed7fb24a182"">",MhmRhm,Standard,exelban/stats,GitHub Issue,2024-05-01T13:11:46Z,exelban/stats,https://github.com/exelban/stats/issues/1923,closed,bug
+GH-656933951,NotNullIfNotNull does not work for properties,"**Version Used**:  Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core (I was unable to google where I can get roslyn version if this is not it)
+
+**Steps to Reproduce**:
+
+```
+class Program
+    {
+        public object? First;
+
+        [NotNullIfNotNull(nameof(First))]
+        public object? Second => First;
+
+        static void Main(string[] args)
+        {
+            var n = new Program();
+
+            if (n.First is null) throw new ArgumentNullException();
+
+            object f = n.First;
+            object s = n.Second; // warning CS8600: Converting null literal or possible null value to non-nullable type.
+        }
+    }
+```
+**Expected Behavior**:
+Neither `object f = n.First;` or `object s = n.Second;` gives out warning because first was explicitly checked and second has an attribute that it is null if first is not null.
+
+
+**Actual Behavior**:
+`object s = n.Second;` gives warning that I am assigning possible null value to a non-nullable variable.
+
+**Related issues**:
+Same attribute for operators
+https://github.com/dotnet/roslyn/issues/39802",mladedav,Standard,dotnet/roslyn,GitHub Issue,2020-07-14T22:22:32Z,dotnet/roslyn,https://github.com/dotnet/roslyn/issues/45984,closed,"Bug, Area-Compilers, Resolution-By Design, New Language Feature - Nullable Reference Types, Concept-Null Annotations"
+GH-1968639698,empty write_bib() for packages without URL,"To reproduce, call `write_bib()` for an installed package with no URL in its DESCRIPTION, for example:
+```r
+knitr::write_bib(""gridSVG"")
+```
+currently produces nothing but an empty line.
+This is a regression in knitr 1.44 due to #2264.
+The return logic in 
+https://github.com/yihui/knitr/blob/0f5a15d9ea0b8edfa7a9ed417af0fd54986d5c39/R/citation.R#L92
+seems at fault.",bastistician,Standard,yihui/knitr,GitHub Issue,2023-10-30T15:25:22Z,yihui/knitr,https://github.com/yihui/knitr/issues/2304,closed,bug
+GH-1049126888,[BUG] Flutter 2.5?,"**Before creating a bug report please make check the following**
+
+- [x] You have read our [FAQ](https://fvm.app/docs/guides/faq)
+- [x] If you have used flutter. Please install correctly, run `pub cache repair`. Close the terminal and try again.
+- [x] If you are on Windows. Make sure you are running the terminal as `administrator` or with `developer` permissions.
+- [x] Run `fvm doctor` if possible and add the output to the issue.
+
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+
+1. Go to terminal..
+2. Run `fvm use stable`...
+3. Check...
+4. See error
+
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Logs**
+Please provide the verbose logs by running `--verbose` after the command.
+
+**Desktop (please complete the following information):**
+
+- OS: [e.g. iOS]
+- FVM Version [e.g. 22]
+- If Windows: Which Powershell are you using?
+
+**Additional context**
+Add any other context about the problem here.",iyobo,Standard,leoafarias/fvm,GitHub Issue,2021-11-09T21:12:47Z,leoafarias/fvm,https://github.com/leoafarias/fvm/issues/360,closed,bug
+GH-144639207,can't pull conftest fixtures from doctests,"If I create a fixture in tests/conftest.py I can't access it in a doctest in package_name/module.py with `getfixture`
+
+See also https://stackoverflow.com/questions/25653147/pytest-doctest-with-fixtures-in-conftest-py",graingert,Standard,pytest-dev/pytest,GitHub Issue,2016-03-30T16:04:25Z,pytest-dev/pytest,https://github.com/pytest-dev/pytest/issues/1495,closed,"type: docs, good first issue, plugin: doctests"
+GH-2325528260,ScheduleRunner::runWebCron using menu's  id,"### Steps to reproduce the issue
+
+- Create a menu item with a single article and make it the default menu (or any other menu item with an id=)
+- Create a Webcron Link 
+- Execute the Webcron
+
+### Expected result
+
+Execution of task(s) due to execution. From the inline help:
+
+`By default, requesting this base link will only run tasks due for execution. To execute a specific task, use the task's ID as a query parameter appended to the URL: BASE_URL&id=<taskId>`
+
+(Thus the id retrieved from the input in ScheduleRunner::runWebCron should be zero.)
+
+### Actual result
+
+The id in runWebCron is set to the id from the menu item, I think it is parseRawRoute adding the id.
+
+So only the tasks matching that ID is executed, if there is any task with that id.
+
+
+### System information (as much as possible)
+
+
+### Additional comments
+
+The problem is resolved by adding a &id=0 to the Webcron Link.  Which is a minor inconvenience, but shouldn't that be the default base url??",brbrbr,Standard,joomla/joomla-cms,GitHub Issue,2024-05-30T12:12:03Z,joomla/joomla-cms,https://github.com/joomla/joomla-cms/issues/43576,closed,"No Code Attached Yet, bug"
+GH-639497965,Crash when inputting x^10=10 into function data input field in Graphing Calculator,"**Summary:**
+Crash when inputting x^10=10 into function data input field in Graphing Calculator
+
+**Repro Steps:**
+1. Launch Calculator
+2. Switch to Graphing mode
+3. In a function data input field, input x^10=10
+4. Press [Enter]
+5. Observe Calculator
+
+**Observed results:**
+Calculator crashes
+
+**Expected results:**
+Calculator doesn't crash
+
+**Exception Thrown:**
+Unhandled exception at 0x00007FFAC20CCDF6 (omsautimmss.dll) in Calculator.exe.6964.dmp: 0xC0000005: Access violation reading location 0x000001BB00000001. occurred",MicrosoftIssueBot,Standard,microsoft/calculator,GitHub Issue,2020-06-16T09:02:23Z,microsoft/calculator,https://github.com/microsoft/calculator/issues/1276,closed,"Bug, Area: Reliability, fixed, Pri: 2"
+GH-1627744925,Undefined reference to 'futhark_tuning_params_for_*',"In the C code generated by `multicore` backend, immediately under the comment `// Miscellaneous` are generated a number of function signatures of the form `const int *futhark_tuning_params_for_myFunction(void);` but no definition follows, resulting in errors at compile-time.",nbos,Standard,diku-dk/futhark,GitHub Issue,2023-03-16T15:27:17Z,diku-dk/futhark,https://github.com/diku-dk/futhark/issues/1896,closed,"bug, compiler"
+GH-1864755549,Homebrew publish CI broken because of the new meilisearch formula path,"The homebrew-core repository has modified its Formula folder and split the files into folders with the first letter of the formula name. The issue is that we use the _mislav/bump-homebrew-formula-action_ Action in our release CI, and it is not up-to-date to follow this new path rule. I propose [using the `formula-path` setting](https://github.com/mislav/bump-homebrew-formula-action#action-inputs) to define where the Meilisearch Formula lies.
+
+For the latest v1.3.2 release, I had to [do the Formula update by hand](https://github.com/Homebrew/homebrew-core/pull/140345). That wasn't that hard, but the CI must have done it automatically.",Kerollmops,Standard,meilisearch/meilisearch,GitHub Issue,2023-08-24T09:22:53Z,meilisearch/meilisearch,https://github.com/meilisearch/meilisearch/issues/4015,closed,"bug, v1.4.0"
+GH-334635046,"ResourceManager doesn't have SDK for latest version viz 2018-02-01, 2018-05-01",ResourceManager has swagger spec present for both API versions (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/Microsoft.Resources/stable) but current version of SDK and nuget package doesn't contain methods for these API versions.,DheerendraRathor,Standard,Azure/azure-sdk-for-net,GitHub Issue,2018-06-21T19:56:26Z,Azure/azure-sdk-for-net,https://github.com/Azure/azure-sdk-for-net/issues/4482,closed,"ARM, Service Attention, bug, ARM - Core, Docs"
+GH-993975299,remove issue with useFieldArray async data,"First of all, thanks a lot for the great library and all the work you have been doing maintaining it !!
+
+I am trying to implement form edition with data fetched from a database.
+I'm leveraging the useFieldArray hook to handle dynamic sections creation and edition.
+
+I created a codesandbox to help you investigate
+https://codesandbox.io/s/objective-haze-9vr3x?file=/src/App.js
+
+(I don't know if I am doing something wrong but here are the steps to reproduce my issue)
+
+1. Wait for the data to load (to simulate a fetch request, we simply used a setTimeout and populated the defaultValues with dummy data)
+2. Remove the 2nd item of the array
+3. Hit the submit button
+
+The data coming into the submit function should normally be an array of one item.
+
+I have been struggling with this issue for quite some time and I would greatly appreciate your help.
+
+_Originally posted by @devmadou in https://github.com/react-hook-form/react-hook-form/discussions/6527_",bluebill1049,Standard,react-hook-form/react-hook-form,GitHub Issue,2021-09-11T23:13:44Z,react-hook-form/react-hook-form,https://github.com/react-hook-form/react-hook-form/issues/6528,closed,bug
+GH-341302469,Adding Adafruit Bluefruit LE SPI Friend,"I bought Adafruit Bluefruit LE SPI Friend to add Bluetooth function to my keyboard but I cant get it to work. When the keyboard is plugged via USB the keypress gets inputted into my computer but when i try to connect via Bluetooth it doesn't work. I am using a teensy 2.0. 
+https://gist.github.com/leonpg2003/bb883d7ae929055e82050bbc45231a87
+-label:help wanted",leonpg2003,Standard,qmk/qmk_firmware,GitHub Issue,2018-07-15T08:13:15Z,qmk/qmk_firmware,https://github.com/qmk/qmk_firmware/issues/3407,closed,"bug, question, help wanted"
+GH-1338990102,Change alert's reason copy for warning trigger,"Related to https://github.com/elastic/kibana/issues/102983 and https://github.com/elastic/kibana/pull/138138
+
+When a rule is triggered with a **warning** threshold, the alert's reason copy is built as `Alert when {comparator} {threshold}`.
+
+We should change the copy to `Warn when {comparator} {threshold}` in such cases to differentiate between alert and warning levels.",kdelemme,Standard,elastic/kibana,GitHub Issue,2022-08-15T13:14:58Z,elastic/kibana,https://github.com/elastic/kibana/issues/138807,closed,"bug, Team: Actionable Observability - DEPRECATED, v8.5.0"
+GH-1293678606,bug: ci tests fail when repository has no tags,"### Describe the Bug
+
+ci tests fail when repository has no tags
+
+```
+git tag
+```
+yields no output if a repository has no tags. This is something that should be expected and tolerated/handled.
+
+### Steps to Reproduce
+
+1. Fork this repository
+2. Delete all tags
+3. Push a commit to the repository that adds a blank line to the README
+4. Create a PR `chore: test`
+
+### Expected Behaviour
+
+the tests should all run to completion and pass
+
+### Actual Behaviour
+
+```
+not ok 206 asdf update should checkout the latest non-RC tag
+# (in test file test/update_command.bats, line 41)
+#   `git tag | grep $tag' failed with status 2
+...
+not ok 207 asdf update should checkout the latest tag when configured with use_release_candidates = yes
+# (in test file test/update_command.bats, line 52)
+#   `git tag | grep $tag' failed with status 2
+```
+
+### Environment
+
+```shell
+(I don't have asdf, the CI failed)
+https://github.com/check-spelling/asdf/commit/624aede7f3480cd6a8817d5a73b72227e87fa668
+```
+
+
+### asdf plugins affected (if relevant)
+
+_No response_",jsoref,Standard,asdf-vm/asdf,GitHub Issue,2022-07-05T01:25:46Z,asdf-vm/asdf,https://github.com/asdf-vm/asdf/issues/1288,closed,"bug, enhancement, help wanted"
+GH-911220178,`vm_service` fails in an existing project only,"Android Studio prompted me to upgrade something, and it became like this directly.
+
+```shell
+fan@iMac-Pro example % flutter run
+Launching lib/main.dart on EVA AL10 in debug mode...
+Running Gradle task 'assembleDebug'...                                  
+Running Gradle task 'assembleDebug'... Done                         4.8s
+✓  Built build/app/outputs/flutter-apk/app-debug.apk.
+Error connecting to the service protocol: failed to connect to http://127.0.0.1:51630/icvvIkylE_I=/
+```
+
+What should I do if I restart the computer and the phone does not work.
+
+It seems that the designated ports are invalid.
+```shell
+fan@iMac-Pro example % flutter run --observatory-port=50443
+Launching lib/main.dart on EVA AL10 in debug mode...
+Running Gradle task 'assembleDebug'...                                  
+Running Gradle task 'assembleDebug'... Done                      2,744ms
+✓  Built build/app/outputs/flutter-apk/app-debug.apk.
+Error connecting to the service protocol: failed to connect to http://127.0.0.1:51800/zD_baP3Bwl8=/
+```
+
+flutter run --observatory-port=50443 -v :
+https://gist.github.com/Aaron009/e1bd58be81871d60b511489aec3308c7
+
+It is strange that a new blank project does not have this problem.
+
+It seems to be caused by this project, I uploaded all the code, please help us to take a look
+https://github.com/Waytoon/flutter_memory_leak_check",Aaron009,Standard,flutter/flutter,GitHub Issue,2021-06-04T07:38:04Z,flutter/flutter,https://github.com/flutter/flutter/issues/83978,closed,"waiting for customer response, tool, dependency: dart, P2, team-tool, triaged-tool"
+GH-1301324271,(App) CWA red bar informs wrong about free test option,"After getting red risk bar the app shows old information:
+
+""Lassen Sie sich testen, auch wenn Sie keine Symptome haben, Bei einer Warnung über ein erhöhtes Risiko [..] haben Sie Anspruch auf einen kostenlosen Test.""
+
+§4a TestV (2) informs that testing with red bar in CWA is not free and need additional payment of 3 EUR. 
+source: [https://www.gesetze-im-internet.de/coronatestv_2021-10/__4a.html]
+
+This wrong information cause conflicts with customers who asking for free rapid test because of CWA red warning bar.
+
+I just got a screenshot today which looks like iOS device. Maybe android is also affected.
+Customer told that his CWA would be newest version.
+
+## Possible Fix
+
+Please remove the sentence ""Bei einer Warnung über ein erhöhtes Risiko [..]""",globberich,Standard,corona-warn-app/cwa-documentation,GitHub Issue,2022-07-11T22:51:57Z,corona-warn-app/cwa-documentation,https://github.com/corona-warn-app/cwa-documentation/issues/909,closed,bug
+GH-545659679,Unused global option warning for driver,"## Brief outline of the bug
+
+When compiling the MWE with latex-dev (in DVI mode), it shows a warning:
+
+```
+LaTeX Warning: Unused global option(s):
+    [dvipdfmx].
+```
+
+but the option is actually used when expl3 is preloaded into the format, in order to select the backend (in this case `l3backend-dvipdfmx.def`).  The global driver option that can be interpreted as an expl3 backend should be free from the warning.
+
+## Minimal example showing the bug
+
+```latex
+\RequirePackage{latexbug}
+\documentclass[dvipdfmx]{article}
+\begin{document}
+a
+\end{document}
+```
+
+## Log file (required) and possibly PDF file  
+
+* [drv.log](https://github.com/latex3/latex2e/files/4025285/drv.log)",aminophen,Standard,latex3/latex3,GitHub Issue,2020-01-06T08:39:24Z,latex3/latex3,https://github.com/latex3/latex3/issues/657,closed,bug
+GH-1561644640,DNA Infuser does not modify organs following the recent changes.,"## Round ID:
+7544
+
+## Reproduction:
+The DNA infuser does not apply organ changes following the 24th of january skyrat specific DNA infuser changes. tested with carp corpses, playing a ""humanoid"" character with vanilla organs.",kylecorn1996,Standard,Skyrat-SS13/Skyrat-tg,GitHub Issue,2023-01-30T02:48:33Z,Skyrat-SS13/Skyrat-tg,https://github.com/Skyrat-SS13/Skyrat-tg/issues/19041,closed,Bug
+GH-2346994031,Unstable input in Numeric Stepper,"### Describe the bug
+
+The desired numeric stepper input values are not being retained and the values fluctuate not allowing the desired input. This is occurring with latest release of the ruffle.js. I am not sure when this issue was introduced to the ruffle code base, but the ruffle.js from February 23, 2022 does not have this issue.
+
+### Expected behavior
+
+When the numeric stepper value is increased or decreased using the UI it should either increment by 1 or decrement by 1 and value should only change by the user interacting with UI.
+
+### Content Location
+
+Please vis the following url: [https://udico.co/dct/die-configuration-tool-testing](https://udico.co/dct/die-configuration-tool-testing). The password to access this page is 'ruffle'
+
+### Affected platform
+
+Desktop app
+
+### Operating system
+
+macOS Sonoma
+
+### Browser
+
+Safari
+
+### Additional information
+
+I will be trying newer versions of the ruffle on our stable application to see at what date it breaks.",rkontra,Standard,ruffle-rs/ruffle,GitHub Issue,2024-06-11T18:01:29Z,ruffle-rs/ruffle,https://github.com/ruffle-rs/ruffle/issues/16684,closed,"bug, regression"
+GH-1230284804,field 'day' missing in date table,"### Describe the bug
+
+Opening a org file will produce the error seen in the screenshot below. It can be shushed away and I have at least one file that will show the error three times before going back to the actual buffer
+
+### Steps to reproduce
+
+See minimal `init.lua`
+
+### Expected behavior
+
+No error
+
+### Emacs functionality
+
+_No response_
+
+### Minimal init.lua
+
+@kristijanhusak sorry, but my setup is getting more elaborate by the day. Before I go down this rabbit-hole, do you have any hunch what could cause this? The `minimal_init.lua` does not reproduce the issue. 
+
+edit: actually, `minimal_init.lua` does reproduce the error, but only on my large, personal files. Will see if I can isolate the cause.
+
+### Screenshots and recordings
+
+![image](https://user-images.githubusercontent.com/12050098/167502492-d1e0ef78-a250-401a-a7dd-e2834aa9787c.png)
+
+
+### OS / Distro
+
+Ubuntu 20.04
+
+### Neovim version/commit
+
+0.7.0
+
+### Additional context
+
+Not sure if related, but at the same time this issue popped up, the time to load the agenda exploded. It takes roughly 5 seconds, same for other agenda commands (forward, backward, view month, etc.)
+
+edit: also not sure if related, but I cannot fold headlines once they have been opened",jgollenz,Standard,nvim-orgmode/orgmode,GitHub Issue,2022-05-09T21:45:51Z,nvim-orgmode/orgmode,https://github.com/nvim-orgmode/orgmode/issues/284,closed,bug
+GH-2116690825,bug: helix themes are broken missing attribute declarations,"### Did you check docs and existing issues?
+
+- [X] I have read all the tokyonight.nvim docs
+- [X] I have searched the existing issues of tokyonight.nvim
+- [X] I have searched the existing issues of plugins related to this issue
+
+### Neovim version (nvim -v)
+
+NVIM v0.10.0-dev-2066+g1813661a6-Homebrew
+
+### Operating system/version
+
+macOS 14.2.1
+
+### Describe the bug
+
+This is specific to helix. Themes that are completely missing attribute definitions as of https://github.com/folke/tokyonight.nvim/commit/9c5ef1e69ad2bd73b4ebe945e7e02284f2658743#diff-7d0281c0678c4322e968c0aaba8a155200ffce96cc30be6005b66e6f536707ccR25
+
+### Steps To Reproduce
+
+Copy any of the generated themes for helix and attempt to set them. They do nothing. Go to the very first commit and use the files that were generated there and notice that they work.
+
+### Expected Behavior
+
+The themes are applied.
+
+### Repro
+
+```Lua
+Look at the commit here: https://github.com/folke/tokyonight.nvim/commit/9c5ef1e69ad2bd73b4ebe945e7e02284f2658743#diff-7d0281c0678c4322e968c0aaba8a155200ffce96cc30be6005b66e6f536707ccL25
+```",blakedietz,Standard,folke/tokyonight.nvim,GitHub Issue,2024-02-03T21:55:54Z,folke/tokyonight.nvim,https://github.com/folke/tokyonight.nvim/issues/488,closed,bug
+GH-623948199,Error: Cannot create filesystem ... image data corrupted,"I tried 2 times clean install (delete all files except install script).
+
+I would appreciate any help.
+
+Thank you.
+
+![image](https://user-images.githubusercontent.com/580593/82765163-92f0a380-9e14-11ea-825b-cbce6a72082d.png)",michal-minich,Standard,myspaghetti/macos-virtualbox,GitHub Issue,2020-05-24T21:17:35Z,myspaghetti/macos-virtualbox,https://github.com/myspaghetti/macos-virtualbox/issues/213,closed,bug
+GH-2430849982,Files sometimes does not remember my sorting preferences for each folder,"### Description
+
+For some folders, I have set the sorting to be A to Z, and in my Files app, the default sorting is most recent to least recent. I found that sometimes, Files does not remember that for this particular folder, I asked the sorting to be A to Z, and will do most to least recent
+This is a bit similar to #15797 , but not entirely because I'm not sure that this happens only when updating, and I didn't understand how OP fixed the issue
+
+### Steps To Reproduce
+
+I don't really know, just have a folder to not be the same sorting as the default sorting
+
+### Requirements
+
+- e.g. Fix crash that occurs when...
+Folder sorting preferences should always be remembered by Files
+
+### Files Version
+
+3.5.24.0
+
+### Windows Version
+
+10.0.22631.3880
+
+### Log File
+
+[debug.log](https://github.com/user-attachments/files/16382927/debug.log)",TheWonderfulTartiflette,Standard,files-community/Files,GitHub Issue,2024-07-25T19:32:47Z,files-community/Files,https://github.com/files-community/Files/issues/15870,closed,"bug, needs - additional info, needs - reproducing"
+GH-1040448256,weight here will lead to zero loss in the dice loss,"https://github.com/open-mmlab/mmdetection/blob/db256a14bb7018ad36eed104ea0ce178a0d4050c/mmdet/models/losses/utils.py#L43
+In the `mmdet.models.roi_heads.mask_heads.fcn_mask_head.py#L173`, the weight was initialized to zeros using `torch.zeros_like(labels)`. 
+
+It will lead to zero loss when call `loss = weight_reduce_loss(loss, weight, reduction, avg_factor).` in the `mmdet.models.losses.dice_loss.py#L44`
+
+I suggest that add 
+```python
+    if weight.sum() == 0:
+        weight = torch.ones_like(weight)
+    else:
+        weight = weight/weight.sum()
+```
+before call `mmdet.models.losses.dice_loss.py#L44`",boyden,Standard,open-mmlab/mmdetection,GitHub Issue,2021-10-31T11:48:37Z,open-mmlab/mmdetection,https://github.com/open-mmlab/mmdetection/issues/6416,closed,"bug, enhancement"
+GH-1776241750,"Node wrapped in Transforms. wrapNodes, with Chinese input method exception at the last position, Abnormal results","**Description**
+ Node wrapped in Transforms. wrapNodes, with Chinese input method exception at the last position
+
+**Recording**
+English input method:
+![1](https://github.com/ianstormtaylor/slate/assets/57823909/7c6aaca1-1e22-46d3-a9f8-a3d3b2a76e3a)
+
+Chinese input method:
+1.  Not focusing to the end
+
+![2](https://github.com/ianstormtaylor/slate/assets/57823909/4efb8529-d611-4d7d-883a-27879959b5e4)
+
+2. Focus to the end, Abnormal results
+![3](https://github.com/ianstormtaylor/slate/assets/57823909/f50b44d2-e481-4d5f-b164-efb96839d33f)
+
+**Sandbox**
+ demo:  https://www.slatejs.org/examples/inlines
+
+**Steps**
+1. click to the last position of the wrapNodes
+3. switch to Chinese input methods for computers
+4. tap any letter on the keyboard
+5. see error
+
+**Expectation**
+resolve
+
+**Environment**
+- Slate Version: www.slatejs.org/examples version
+- Operating System: windows 10
+- Browser: Chrome 114.0.5735.134",NgChiKin,Standard,ianstormtaylor/slate,GitHub Issue,2023-06-27T07:09:41Z,ianstormtaylor/slate,https://github.com/ianstormtaylor/slate/issues/5471,closed,"bug, ⚑ cross platform"
+GH-2368473478,A dot at the end of a folder name will cause sync error,"### What happened?
+
+My folder was out of sync and I noticed that there was an error cause by the folder name.
+Folder name : ""Mes cousins pref."" (with a dot at the end)
+Error in log : I don't have the exact error because when I fixed it it disappeared but it was something saying that there was an argument error with ""mkdir Mes couses pref.""
+The client is Android, the serveur is Ubuntu
+
+### Syncthing version
+
+v1.27.8
+
+### Platform & operating system
+
+Linux (64-bit Intel/AMD)
+
+### Browser version
+
+not relevant
+
+### Relevant log output
+
+```shell
+I don't have the log anymore but it was something like it could not create the directory : argument error with ""mkdir Mes couses pref.""
+```",hyzteric,Standard,syncthing/syncthing,GitHub Issue,2024-06-23T09:42:32Z,syncthing/syncthing,https://github.com/syncthing/syncthing/issues/9589,closed,"bug, needs-triage"
+GH-201921221,Should we add validation of the RIDs?,"## Repro
+
+1. Install latest CLI from dotnet/cli
+2. `mkdir app && cd app`
+3. `dotnet new`
+4. Open up the project and change the target framework to be `net451`.
+5. Add `<RuntimeIdentifiers>win10-x64;win19-x12</RuntimeIdentifiers>` to the project.
+6. Run `dotnet restore`.
+7. Run `dotnet publish -r win19-x12`.
+
+I would expect the operation to fail since the RID is obviously not valid. However, it succeeds and the output folder is created with the bits in it.",blackdwarf,Standard,dotnet/sdk,GitHub Issue,2017-01-19T17:15:09Z,dotnet/sdk,https://github.com/dotnet/sdk/issues/690,closed,"Bug, Urgency-Soon"
+GH-2020713786,PATH not respected in hooks,"**Describe the bug**
+I use [devenv](https://devenv.sh) and [direnv](https://direnv.net) to make some applications available on a per-directory basis by setting the PATH environment variable. I use it especially to provide project specific git hooks. However, when committing with gitui, those applications don't seem to be available.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Create a script somewhere, lets call it `my-own-script`
+2. Add its parent to the `PATH`
+3. Create a pre-commit hook that uses `my-own-script`
+4. Try to commit using gitui
+5. See it fail because it can't find `my-own-script`
+
+**Expected behavior**
+gitui being able to see applications in the PATH
+
+**Context (please complete the following information):**
+ - NixOS unstable
+ - gitui 0.24.3",Lykos153,Standard,extrawurst/gitui,GitHub Issue,2023-12-01T11:40:37Z,extrawurst/gitui,https://github.com/extrawurst/gitui/issues/1967,closed,"bug, help wanted"
+GH-332966790,"How to close Quadrotor sim, without crashing Unreal","Hey all,
+I am using Unreal on Ubuntu for Airsim.
+
+Everytime i hit 'esc' or try to shut down the simulation in quadrotor mode, Unreal crashes.
+This doesn't happen with car mode.
+
+Anyone know how to kill the unreal airsim simulation while in quadrotor mode, without it crashing?
+
+Thanks.",CaptainJL,Standard,microsoft/AirSim,GitHub Issue,2018-06-16T07:06:45Z,microsoft/AirSim,https://github.com/microsoft/AirSim/issues/1167,closed,bug
+GH-871584722,Support S3 URI format for package artifact,"### Use case description
+
+Serverless supports downloading and using a package artifact from an S3 bucket, but it only allows the outdated global legacy path style S3 URL format (e.g. `s3.amazonaws.com/bucket/path`) which can be confusing when the AWS web console will give a URL like `bucket.s3.us-west-2.amazonaws.com/path`.
+
+There are other S3 bucket URI formats.
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html
+
+### Proposed solution
+
+Under the hood, Serverless is just parsing this string for the bucket and path, and then making a call to AWS JS SDK `S3.getObject()`
+
+I propose Serverless should add support for the more basic and easier to parse S3 URI format: `S3://bucket-name/key-name` and docs should suggest using this format instead of the legacy format.",zachwhaley,Standard,serverless/serverless,GitHub Issue,2021-04-29T22:05:18Z,serverless/serverless,https://github.com/serverless/serverless/issues/9403,closed,"bug, help wanted, cat/deployment"
+GH-1109488634,"Gson serializes anonymous inner class instance as ""null""","# Gson version
+2.8.9
+
+
+# Java 
+11
+
+# Description
+Give a class definition:
+```
+  class Links {
+      public Map<String, String> discovery;
+  }
+```
+The result of running this is ""null"":
+```
+new Gson().toJson(new Links() {{
+            discovery = Map.of(""foo"",""bar"")
+            }}),
+```
+
+This result of running this is as expected (`{ ""discovery"": { ""foo"":""bar"" } }`):
+```
+new Gson().toJson(new Links() {{
+            discovery = Map.of(""foo"",""bar"")
+            }}, 
+            Links.class)
+```
+
+## Expected behavior
+Both outputs should be the same
+
+
+This is very problematic, it means the serialization will fail unexpectedly and silently when somebody uses an inner class possibly in completely unrelated part of the code.",jakub-bochenski,Standard,google/gson,GitHub Issue,2022-01-20T16:07:31Z,google/gson,https://github.com/google/gson/issues/2059,closed,bug
+GH-1659480864,[BUG] btn-action <a>/<button> does not follow disabled state,"**Describe the bug**
+
+When using disabled action buttons, they shoud not react to mouseover/show a hover effect, but they do.
+
+**Device**
+
+ - Browser: Firefox 111.0.1
+ - OS: Linux/Manjaro current
+ - Screen size 1600x900
+
+**To reproduce**
+
+Write a card or table td with an action button which is a dropdown, and the toggler is not an <a> element, but a <button>, which is valid bootstrap (and good if you don't want the user to easily see the link in the bottom of the browser when hovering).
+This is a django template
+```django
+<button
+    class=""btn-action dropdown-toggle""
+    type=""button""
+    id=""dropdown-action-{{ day_entry.date.isoformat }}""
+    data-bs-toggle=""dropdown""
+    aria-expanded=""false""
+    {% if not actions_enabled %} disabled{% endif %}
+>
+  <i class=""bi bi-three-dots-vertical""></i>
+</button>
+<ul class=""dropdown-menu"" aria-labelledby=""dropdown-action-{{ day_entry.date.isoformat }}"">
+  {% if day_entry.can_add_holiday %}
+    <li><a class=""dropdown-item"" href=""#"">Request holiday</a></li>
+  {% endif %}
+</ul>
+</div>
+```
+
+when using the <a> you'd have to use `class=""... disabled""` instead of a `disabled` attribute, but it doesn't work neither.
+The button does ""highlight"" on hovering.
+
+However, the underlying function (dropdown) does work as intended (does not drop down) when disabled - as this is done by bootstrap.
+
+Seems to be a simple CSS issue.",nerdoc,Standard,tabler/tabler,GitHub Issue,2023-04-08T10:33:12Z,tabler/tabler,https://github.com/tabler/tabler/issues/1524,closed,bug
+GH-2229682833,Sbt compile cannot include the dependency jar to classpath,"steps
+>
+1.Add new resolver such as 
+
+```scala
+resolvers ++= Seq(
+  ""github-package"" at ""https://maven.pkg.github.com/xxx/*"",
+)
+```
+2.Add the dependency like this
+```scala
+libraryDependencies ++= Seq(
+    ""com.xxx.yyy"" %% ""groupid"" % ""0.21.1"",
+)
+```
+
+problem
+>
+When I run `sbt compile` the dependency jar from that repo can be download successfully, but finally it will be failed and it will pop this error: object xxx is not memeber of the package...... I am sure the class(com.xxx.AuditEvent) is under the dependency jar.
+Error Info:
+```
+[info] compiling 67 Scala sources to /Users/ethan/global/orgs/target/scala-2.12/classes ...
+[error] /Users/ethan/com.test.AuditService.scala:3:23: object audit is not a member of package com.xxx
+[error] import com.xxx.AuditEvent
+```
+note
+>
+sbt is 1.9.8 and scala 2.12
+
+Workaround
+>
+If I copy the dependency jar from 
+Users/ethan/Library/Caches/Coursier/v1/https/maven.pkg.github.com/com/xxx/1.0.6/xxx.jar
+to
+Users/ethan/Library/Caches/Coursier/v1/https/repo1.maven.org/com/xxx/1.0.6/xxx.jar
+It can work well, so I guess that , sbt can add the jars from https/repo1.maven.org(default resolver) to classpath but can not add the new resolver repo such as `maven.pkg.github.com(private resolver)` to the classpath.",ethan2000,Standard,sbt/sbt,GitHub Issue,2024-04-07T10:25:11Z,sbt/sbt,https://github.com/sbt/sbt/issues/7526,closed,Bug
+GH-581675591,Access to the admin panel relative link,"**Steps to reproduce the behavior**
+1. Setup strapi behind a reverse proxy so that strapi can be accessed with the url `strapi.domain.com`
+2. Call `strapi.domain.com` and click 'Create the first administrator' button
+
+**Expected behavior**
+You should be redirected to `strapi.domain.com/admin`
+
+**Actual behavior**
+You are redirected to `localhost:1337/admin`
+
+The link should point to `/admin` instead of `localhost:1337/admin`.",mkampmey,Standard,strapi/strapi,GitHub Issue,2020-03-15T13:30:22Z,strapi/strapi,https://github.com/strapi/strapi/issues/5508,closed,"issue: enhancement, severity: low, good first issue, source: core:admin"
+GH-2219836506,Can not write or read data to SASL Kafka,"Hello Team
+
+**Description**:
+
+we need to use envoy to do the proxy for kafka
+
+1. envoy version: 1.18.2
+2. kafka version: 2.8.1
+3. configed follow this wiki: https://www.envoyproxy.io/docs/envoy/v1.18.2/configuration/listeners/network_filters/kafka_broker_filter#config-network-filters-kafka-broker
+4. once kafka enable SASL Auth, 
+- kafka-topics.sh can work well for example to list topics via envoy address.
+- consumer client can not work (even consumer group can not found)
+- write data also can not work
+5. no auth version kafka work well 
+
+**QA**:
+1. is this filter support Auth-kafka ?
+2. is this a bug?
+3. I notice: the kafka proxy is experimental and is currently under active development. , do we have plan to release this version?
+4. any version now for envoy include stable kafka-proxy ?
+
+Hope for your feedback, thanks team!
+-",rainbowwiki,Standard,envoyproxy/envoy,GitHub Issue,2024-04-02T08:02:56Z,envoyproxy/envoy,https://github.com/envoyproxy/envoy/issues/33256,closed,"bug, stale"
+GH-1299121004,I have an issue with flutter doctor,"[!] HTTP Host Availability
+    X HTTP host ""https://pub.dev/"" is not reachable. Reason: An error occurred while checking the HTTP host: The semaphore timeout period has expired.",Steven20201,Standard,flutter/flutter,GitHub Issue,2022-07-08T14:49:23Z,flutter/flutter,https://github.com/flutter/flutter/issues/107310,closed,"waiting for customer response, tool, t: flutter doctor"
+GH-2410909434,[Bug]: @storybook/core is (wrongly) specifying @storybook/global as a devDependency,"### Describe the bug
+
+Storybook 8.2 (re-)introduces the `@storybook/core` dependency. That package imports from `@storybook/global`, but specifies it only as a `devDependency`. This works just fine in most setups because various other storybook packages do specify `@storybook/global` as a dependency, so it gets installed anyway.
+
+However, when using yarn berry with [Plug'n'Play](https://yarnpkg.com/features/pnp), a package can only access other packages if they are specified in the dependency list.
+There's a workaround using [packageExtensions](https://yarnpkg.com/configuration/yarnrc#packageExtensions) in the `.yarnrc.yml`, but IMO the proper solution would be to upgrade `@storybook/global` to a proper dependency of `@storybook/core`.
+
+### Reproduction link
+
+probably not necessary for this case
+
+### Reproduction steps
+
+_No response_
+
+### System
+
+```bash
+Shouldn't be relevant to the problem at hand, can be provided if necessary.
+```
+
+
+### Additional context
+
+_No response_",alexanderbartl,Standard,storybookjs/storybook,GitHub Issue,2024-07-16T11:31:58Z,storybookjs/storybook,https://github.com/storybookjs/storybook/issues/28619,closed,"bug, needs more info, yarn"
+GH-683953266,Override destination in workflow ignored,"NB: Maybe I've misunderstood something
+
+I've created a workflow named _""Capture to google Photo""_
+* Task: _""Capture region""_
+* Checked _""override after capture settings""_ and set to _""Open in image editor""_
+* Checked _""Override destinations""_ et set Image Uploader to _""Google Photos""_
+
+I activate the workflow, select region , image editor opens. 
+I make small editions, click on _""upload image""_
+
+Problem is that capture is uploaded to the default uploader, not Google Photos",gpion,Standard,ShareX/ShareX,GitHub Issue,2020-08-22T08:01:21Z,ShareX/ShareX,https://github.com/ShareX/ShareX/issues/4991,closed,Bug
+GH-2266346817,New lsp keybindings: `crr` in visual mode breaks visual selection -> `c` workflow,"### Problem
+
+The new lsp keybindings include `crr` in visual mode for code actions. This breaks the visual mode -> `c` workflow because the user now has to wait for `timeoutlen`.
+
+### Steps to reproduce
+
+After a server has attached, select some text, then press `c`
+
+### Expected behavior
+
+Selected text is gone and nvim is in insert mode immediately
+
+### Neovim version (nvim -v)
+
+0.10.0 commit 9b8a0755390b7eb3ad369f3a0a42eb9aecb8cbe2
+
+### Vim (not Nvim) behaves the same?
+
+no
+
+### Operating system/version
+
+N/A
+
+### Terminal name/version
+
+N/A
+
+### $TERM environment variable
+
+N/A
+
+### Installation
+
+N/A",p00f,Standard,neovim/neovim,GitHub Issue,2024-04-26T19:00:52Z,neovim/neovim,https://github.com/neovim/neovim/issues/28528,closed,"bug, lsp"
+GH-870425677,Navi collapses multiple newlines into a single newline,"**Describe the bug**
+
+Navi collapses multiple newlines into a single newline.
+
+**To Reproduce**
+
+Consider the following snippet to compose a commit message with a co-author:
+
+```
+% Git
+
+# Commit with co-author
+git commit -m ""$(cat <<EOF
+<commit_message>
+
+<co_author>
+EOF
+)""
+
+$ co_author: git log --pretty=""%an <%ae>"" | sort | uniq | sed 's|^|Co-authored-by: |g'
+```
+
+I expect the following to be populated to my shell:
+
+```
+git commit -m ""$(cat <<EOF
+My awesome commit message
+
+Co-authored-by: User <user@example.com>
+EOF
+)""
+```
+
+Instead, the following is populated to my shell:
+
+```
+git commit -m ""$(cat <<EOF
+My awesome commit message
+Co-authored-by: User <user@example.com>
+EOF
+)""
+```
+
+The newlines between the first line of the message on the `Co-authored-by` line are collapsed into a single newline.
+
+**Versions:**
+ - OS: macOS 11
+ - Shell Version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin20)",knpwrs,Standard,denisidoro/navi,GitHub Issue,2021-04-28T22:01:08Z,denisidoro/navi,https://github.com/denisidoro/navi/issues/539,closed,bug
+GH-1096357337,[MDCTextField] Floating label breaks when pre-populating inputs,"## Bug report
+If you want to pre-populate a form with data, the component does not update the label position to be floating.
+
+### Steps to reproduce
+1. Go to https://stackblitz.com/edit/angular-ivy-i7imzc?file=src/app/app.component.html
+2. Select a name from the `<select>` element.
+3. Notice the labels to not float above the input and it looks broken.
+
+### Actual behavior
+The label stays over the input and looks broken.
+
+### Expected behavior
+When an input has a value, the label should be floating.
+
+### Screenshots
+![A broken looking form](https://i.imgur.com/SoW0dTQ.png)
+
+### Your Environment:
+
+<!-- please complete the following information -->
+
+| Software         | Version(s) |
+| ---------------- | ---------- |
+| MDC Web          | 13
+| Browser          | All
+| Operating System | All
+
+### Additional context
+
+I have also tried running
+
+```
+setTimeout(function updateComponentLayoutDelayed() {
+	[].slice.call(document.querySelectorAll('.mdc-text-field')).forEach(function updateComponentLayout(input) {
+		if (input.mdcInstance.layout) {
+			input.mdcInstance.layout();
+		}
+	});
+}, 500);
+```
+And it doesn't update the labels.
+
+### Possible solution",tsteuwer-accesso,Standard,material-components/material-components-web,GitHub Issue,2022-01-07T14:18:26Z,material-components/material-components-web,https://github.com/material-components/material-components-web/issues/7503,closed,bug
+GH-1040357040,[BUG] Fix CodeQL warnings,"### Description
+
+Currently, there are many CodeQL warnings. LGTM is marking our code quality as `B`. We need to get it higher (link: https://lgtm.com/projects/g/TheAlgorithms/C-Plus-Plus/alerts/?mode=list).
+
+
+### Expected behavior
+
+We should fix all the CodeQL/LGTM warnings.
+
+### Actual behavior
+
+LGTM is reporting 7 alerts, which marks our quality code as `B`.
+
+### Possible fix
+
+Fix all the CodeQL/LGTM warnings.
+
+### Steps to reproduce
+
+1. Go to https://lgtm.com/projects/g/TheAlgorithms/C-Plus-Plus/alerts/?mode=list.
+2. You will see all the warnings CodeQL is reporting, which makes it easier for us to fix them.
+3. There's a help button in case you need help or are confused with that error.
+
+### Context
+
+Having bugs in our code (even minimal bugs) can make it all go wrong or simply affect other students/people reading and understanding our algorithms.
+
+### Additional information
+
+Nope.",Panquesito7,Standard,TheAlgorithms/C-Plus-Plus,GitHub Issue,2021-10-31T02:10:07Z,TheAlgorithms/C-Plus-Plus,https://github.com/TheAlgorithms/C-Plus-Plus/issues/1826,closed,"bug, help wanted, good first issue"
+GH-2283221167,"Cancelling ""Close and Shut Down Notebook"" closes tab anyway","## Description
+
+When I select ""Close and Shut Down Notebook"" from the ""File"" menu and then either click its ""Cancel"" button or hit the Escape key, the browser tab closes. The kernel remains running.
+
+
+## Reproduce
+
+1.  Within the main Jupyter window, create a new notebook.
+2.  Save the notebook.
+3.  From the ""File"" menu, select ""Close and Shut Down Notebook"".
+4.  Within the ""Shut down the notebook?"" dialog, either click the ""Cancel"" button or type the Escape key. The browser's tab unexpectedly closes.
+
+
+## Expected behavior
+
+I expected the notebook tab to remain open.
+
+
+## Context
+
+- Operating System and version: Windows 10
+- Browser and version: Firefox 125.0.3, Chrome 124.0.6367.119
+- Jupyter Notebook version: 7.1.3
+
+I'm happy to provide troubleshooting output as needed.",stanwest,Standard,jupyter/notebook,GitHub Issue,2024-05-07T12:52:31Z,jupyter/notebook,https://github.com/jupyter/notebook/issues/7359,closed,bug
+GH-258734431,Embed HTML into an HTML5 SVG fragment got wrong namespace in template,"### Version
+2.4.4
+
+### Reproduction link
+[https://jsfiddle.net/sn7o1mm3/](https://jsfiddle.net/sn7o1mm3/)
+
+### Steps to reproduce
+Embed `<p  xmlns=""http://www.w3.org/1999/xhtml"">` in the svg <foreignObject> element 
+
+### What is expected?
+the `<p>` should be rendered as a htmlElment and show.
+
+### What is actually happening?
+`<p>` did not show
+
+---
+seems related to this https://github.com/vuejs/vue/issues/6506
+
+<!-- generated by vue-issues. DO NOT REMOVE -->",rrandom,Standard,vuejs/vue,GitHub Issue,2017-09-19T08:20:06Z,vuejs/vue,https://github.com/vuejs/vue/issues/6642,closed,bug
+GH-613502820,Cannot place debugger breakpoint on an assignment,"Debugging currently does not work, most likely due to an ElixirSense change. This gist has some details:
+
+https://gist.github.com/Ajwah/4dee98bbb1e0c9257bb52dcd6c6802e2#file-gistfile1-txt
+
+The error `Could not determine module at line` is received when debugging.
+
+It's seems likely that this broke from the ElixirSense update in https://github.com/elixir-lsp/elixir-ls/pull/202",axelson,Standard,elixir-lsp/elixir-ls,GitHub Issue,2020-05-06T17:53:40Z,elixir-lsp/elixir-ls,https://github.com/elixir-lsp/elixir-ls/issues/234,closed,bug
+GH-1836440326,Error formatting code containing new Regex literals,"Apple introduced `Regex` literals with macOS 13. I have found that `swiftlint` runs into errors with the new literals.
+
+A minimal example would be an escaped closing brace:
+
+     /\)/
+
+This will fail with:
+
+    error: Unexpected token ) at 72:15 in /.../MyFile.swift.",eaigner,Standard,nicklockwood/SwiftFormat,GitHub Issue,2023-08-04T09:58:03Z,nicklockwood/SwiftFormat,https://github.com/nicklockwood/SwiftFormat/issues/1492,closed,"bug, fixed in develop"
+GH-1936623702,Pasting a link over selected text deletes the text,"### Issue Summary
+
+Having had my Ghost(Pro) instance updated to 5.68 yesterday and thus tried out the new editor for the first time, I noticed that pasting links onto selected text doesn't apply the link to the text but rather deletes the text. In mobiledoc-days executing that action would in fact apply the link to the text, obviating one having to hover over the selected text, click on the link icon, pasting the text into the box, and hitting enter.
+
+### Steps to Reproduce
+
+1. Copy a link
+2. Select some text in the editor
+3. Attempt to paste the text
+4. See the selected text disappear
+
+### Ghost Version
+
+5.68
+
+### Node.js Version
+
+Yes
+
+### How did you install Ghost?
+
+Ghost(Pro)
+
+### Database type
+
+MySQL 5.7
+
+### Browser & OS version
+
+_No response_
+
+### Relevant log / error output
+
+_No response_
+
+### Code of Conduct
+
+- [X] I agree to be friendly and polite to people in this repository",stromfeldt,Standard,TryGhost/Ghost,GitHub Issue,2023-10-11T01:53:00Z,TryGhost/Ghost,https://github.com/TryGhost/Ghost/issues/18569,closed,"bug, affects:editor"
+GH-580676417,[BUG]Tray icon double left click image editor,"I have the following settings configured: https://i.imgur.com/nUSAwqq.png
+When I double left click on the tray icon, the image editor shows up, BUT also the capture region.
+
+Can you fix that bug?
+
+When double clicking the tray icon, it should only show the image editor. Thank you.",worldsdream,Standard,ShareX/ShareX,GitHub Issue,2020-03-13T15:28:47Z,ShareX/ShareX,https://github.com/ShareX/ShareX/issues/4672,closed,Bug
+GH-2433583119,Missing content for API Design roadmap,"### What is the URL where the issue is happening
+
+https://roadmap.sh/api-design
+
+### What browsers are you seeing the problem on?
+
+Firefox
+
+### Describe the Bug
+
+The `Building JSON / RESTful APIs > Rate Limiting` topic is missing, detail page returns ""Topic not found"", HTTP request returns 404.
+
+The links for `API Security Best Practices` and `API Performance Best Practices` point to the same `https://roadmap.sh/api-design` url.
+
+### Output from browser console (if any)
+
+_No response_
+
+### Participation
+
+- [ ] I am willing to submit a pull request for this issue.",DazSanchez,Standard,kamranahmedse/developer-roadmap,GitHub Issue,2024-07-27T18:25:30Z,kamranahmedse/developer-roadmap,https://github.com/kamranahmedse/developer-roadmap/issues/6254,closed,bug
+GH-685094733,Truffle is inventing an imaginary truffle-config.js when one doesn't exist,"## Issue
+
+Suppose you have a Truffle project that uses `truffle.js` instead of `truffle-config.js`.
+
+When you attempt to have Truffle do anything, Truffle will:
+1. Warn you that you have both `truffle.js` and `truffle-config.js`, even though you don't;
+2. Use the default configuration residing in this imaginary `truffle-config.js`, rather than the one you specified in `truffle.js`
+
+## Steps to Reproduce
+
+1. Create a new directory and run `truffle init`
+2. Rename `truffle-config.js` to `truffle.js`
+3. In `truffle.js`, uncomment the `version` line, and change the version to `""0.7.0""`
+4. Run `truffle version`
+5. Observe the warning that was printed out
+6. Observe that the solc version printed out was 0.5.16 instead of 0.7.0
+
+## Expected Behavior
+
+When `truffle-config.js` is not present, Truffle should use the settings in `truffle.js`, and should not warn about the former being present when it's not.
+
+## Actual Results
+
+See above.
+
+## Environment
+
+* Operating System: Release Linux Mint 20 Ulyana 64-bit
+* Truffle version (`truffle version`): 5.1.41
+* node version (`node --version`): 10.15.3
+* npm version (`npm --version`): 6.14.5",haltman-at,Standard,trufflesuite/truffle,GitHub Issue,2020-08-25T01:50:32Z,trufflesuite/truffle,https://github.com/trufflesuite/truffle/issues/3303,closed,"bug, Config"
+GH-679576245,[7.4] Tabview button does not show press overlay,"**Describe the bug**
+
+The tab buttons on the tabview do not show a press overlay when clicked. I am using the light material theme.
+
+**To Reproduce**
+
+Run `lv_demo_widgets`. Press one of the tab buttons. Observe that the press overlay does not appear.
+
+**Expected behavior**
+
+A gray overlay should appear when the button is clicked.
+
+**Additional context**
+
+If you switch the theme to dark using the switch, the press overlay appears correctly. If you then switch the theme back to light, the press overlay still appears correctly.",embeddedt,Standard,lvgl/lvgl,GitHub Issue,2020-08-15T13:35:28Z,lvgl/lvgl,https://github.com/lvgl/lvgl/issues/1728,closed,bug
+GH-2016888470,Incorrect minimum part sizes causing S3 multipart upload to fail,"Did some testing of s3 since I saw some issues trying to run `tpch` against the cloudformation node. Wrote a test as part of [#2976](https://github.com/xtdb/xtdb/issues/2976) that runs tpch at `0.05` scale, calling `finish-chunk!` after, noticed a few things:
+
+-  This is enough to trigger a multipart upload - and the multipart upload is problematic.
+-  Was trying to upload parts out of order, which caused issues - updated the way it handles part-numbers/sorting the list at the end to fix this, and pushed a fix to `2.x`
+-  After fixing the above, started getting back `Your proposed upload is smaller than the minimum allowed size`  - seems like the parts it's trying to upload are smaller than 5MiB:
+
+```
+[{:part-number 1, :content-length 5256488}
+ {:part-number 2, :content-length 5212824}
+ {:part-number 3, :content-length 5176008}
+ {:part-number 4, :content-length 5215192}
+ {:part-number 5, :content-length 250578}]
+```
+
+We expect/are fine with the final part being <5MB (content length `5242880` ), but seems like some of the other parts are, too. Might be some slight issues with the way we're taking parts in the bufferpool.",danmason,Standard,xtdb/xtdb,GitHub Issue,2023-11-29T15:46:43Z,xtdb/xtdb,https://github.com/xtdb/xtdb/issues/3004,closed,bug
+GH-2329978687,Breaks the new github workspaces on Issues,"### Description
+
+I have given Copilot Workspace access to my organization. Now, when I got to an open pull request I have a ""Open in Workspace"" button in the right column, and I'm also able to go the Copilot Workspace Dashboard and create a New Session for my repo from there. However, I do not have this button on any Issues that I open. This is the primary starting point for me so I'd love to get the button working there.
+
+The docs here show it as the first example: https://github.com/githubnext/copilot-workspace-user-manual/blob/main/getting-started.md
+
+@terkel Multiple users have this issue ^
+rahulpandita — 05/28/2024 11:01 AM
+
+Are you using a any chrome extension that alter the GitHub UI like [ https://github.com/refined-github/refined-github] , that may interfere with rendering the button on issues page? 
+
+Ahhh, refined github! I disabled it and now the button appears.
+
+### How to replicate the issue + URL
+
+Activate Github Workspaces, apply it to a project, and then visit any issue within that project. This project has Workspaces already activated so here is a random Issue.
+https://github.com/AllYourBot/hostedgpt/issues/236
+
+### Extension version
+
+Not sure, I just uninstalled
+
+### Browser(s) used
+
+Chrome",krschacht,Standard,refined-github/refined-github,GitHub Issue,2024-06-03T01:19:12Z,refined-github/refined-github,https://github.com/refined-github/refined-github/issues/7390,closed,bug
+GH-1531520393,CronJobs missing from sidebar in OpenLens 6.3.0 and 6.4.0-alpha.2,"**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Open OpenLens
+2. CronJobs section is missing
+
+**Expected behavior**
+
+I can still get to the cronjob page by clicking into the Jobs section and clicking the CronJob link in the job, but there should be a clickable CronJob link in the sidebar underneath the ""Jobs"" link.
+
+**Screenshots**
+![image](https://user-images.githubusercontent.com/75972/212207800-9756a50c-b638-475a-93aa-9bb488fa7253.png)
+
+**Environment (please complete the following information):**
+- Lens Version: 6.3.0 and 6.4.0-alpha.2
+- OS: NixOS Linux
+- Installation method (e.g. snap or AppImage in Linux): AppImage install",benwbooth,Standard,lensapp/lens,GitHub Issue,2023-01-13T00:16:07Z,lensapp/lens,https://github.com/lensapp/lens/issues/6931,closed,"bug, area/kubernetes-next"
+GH-495351193,Compile error: Nested loops with index broke after 3.9.1,"**Describe the bug**
+You can see the exact same weird parsing behavior in the example below
+
+**Logs**
+Generated code is wrong, for instance when using `{@debug paneIndex}` it generates this:
+![image](https://user-images.githubusercontent.com/181384/65169506-f422d480-da46-11e9-9412-0f6068fbd27b.png)
+(`paneIndex` is the index from `{#each ... }` loop)
+
+**To Reproduce**
+https://svelte.dev/repl/af7ece0c29f240ad97bf795bd3be1347?version=3.9.1
+
+- Remove debug, it compiles properly
+- Remove the inner loop, and it compiles properly. 
+- Debug is not at fault here, because in my project, the `index` is no longer passed onto nested loops which breaks my code.
+
+**Expected behavior**
+- Proper compilation without errors
+
+**Stacktraces**
+- No errors from the compiler, only compiled code gives an error
+
+**Information about your Svelte project:**
+- Svelte version 3.9.1 compared to every single version above
+
+**Severity**
+- Medium, project is live with over 100+ daily CCU. Having smooth animations is very important in my project. I would've loved to have latest transition/animations fixes which currently look a bit janky in 3.9.1, this compiler issue prevents me from upgrading.",Xerios,Standard,sveltejs/svelte,GitHub Issue,2019-09-18T17:11:23Z,sveltejs/svelte,https://github.com/sveltejs/svelte/issues/3588,closed,bug
+GH-580656440,New browsers SameSite cookie attribute default behavior breaks SAML,"Browser vendors started changing the default behavior for the SameSite cookie attribute. This is to enable default CSRF protection for the websites. Since Teleport uses it's own CSRF protection mechanism during SAML sign-up flow by setting `grv_csrf` cookie, this new browser behavior breaks it.
+
+More info here:
+https://www.chromestatus.com/feature/5088147346030592
+
+We need to explicitly set `sameSite=none` for the `grv_csrf` cookie to opt-in from this default behavior.",alex-kovoy,Standard,Gravitational/teleport,GitHub Issue,2020-03-13T15:00:07Z,Gravitational/teleport,https://github.com/gravitational/teleport/issues/3440,closed,"bug, sso"
+GH-167491513,Codelens is missing references from VB projects,"[Build: VS2015.3]
+
+Open SimplificationOptions.cs in Roslyn.sln and pick any member that is referenced from C# and VB projects. Say `PreferIntrinsicPredefinedTypeKeywordInDeclaration` for example.
+
+Notice that codelens results differ from FAR results. It appears that codelens is missing results from VB. Not sure if this is a widespread issue or something in Roslyn.sln or because of whatever refactorings I locally made to Roslyn.sln. In any case this is a bug, but we need to determine how severe this is.
+
+![image](https://cloud.githubusercontent.com/assets/4213867/17121264/54958d08-5287-11e6-8360-b1e58807f5a3.png)",balajikris,Standard,dotnet/roslyn,GitHub Issue,2016-07-25T23:50:31Z,dotnet/roslyn,https://github.com/dotnet/roslyn/issues/12731,closed,"Bug, Area-IDE"
+GH-47159519,"index in d3.svg.area function does,'t seem to work","in the docs for d3.svg.area, the function itself is defined as
+ area(data[, index])
+with the index explained as 'An optional index may be specified, which is passed through to the area's accessor functions.'
+
+However, I can't seem to get this working, and judging from the code, I don't think it's even implemented...
+An index is supplied to the accessor functions, but only one generated inside the area function.",jmichiel,Standard,d3/d3,GitHub Issue,2014-10-29T15:08:19Z,d3/d3,https://github.com/d3/d3/issues/2094,closed,documentation
+GH-2022374158,Bug: Enqueued Actions throw type error inside setup(),"### Description
+
+When using the new setup api to provide actions when you use the enqueueActions action typescript throws
+
+
+
+
+### Expected result
+
+This should not throw an error. It does not throw an error when it is used as an object passed to createMachine
+
+![image](https://github.com/statelyai/xstate/assets/6943688/a2ea57b2-cd13-4964-b4c8-c63477fb2c9d)
+
+
+### Actual result
+
+![image](https://github.com/statelyai/xstate/assets/6943688/b045779f-39cd-4d10-8db0-1060121defd3)
+
+### Reproduction
+
+https://codesandbox.io/p/sandbox/silly-danny-vf63fc
+
+### Additional context
+
+Also just incase demo doesn't show it when you goto the repro it was being weird when I would refresh and it would show the right type but when I commented it out it would break again  🤔
+
+https://github.com/statelyai/xstate/assets/6943688/aee6c437-21e0-4076-bf50-d6286c903d90",KrisCoulson,Standard,statelyai/xstate,GitHub Issue,2023-12-03T05:09:44Z,statelyai/xstate,https://github.com/statelyai/xstate/issues/4545,closed,"bug, typescript"
+GH-1733670299,[BUG] `RichAttributionWidget` causes error due to un-mounted `setState` call,"### What is the bug?
+
+If using `RichAttributionWidget` with the 'start open, auto close' feature, if the widget/screen containing the widget is unmounted, the RAW still attempts a `setState` call, which results in an error.
+
+### How can we reproduce it?
+
+Use the demonstration code at https://docs.fleaflet.dev/#demonstration. Add another screen to the app, and navigate to this screen within 3 seconds of the map widget being loaded.
+
+### Do you have a potential solution?
+
+Check that the `RichAttributionWidget` is still mounted before calling `setState`.
+
+### Platforms
+
+All
+
+### Severity
+
+Erroneous: Prevents normal functioning and causes errors in the console",JaffaKetchup,Standard,fleaflet/flutter_map,GitHub Issue,2023-05-31T08:38:05Z,fleaflet/flutter_map,https://github.com/fleaflet/flutter_map/issues/1538,closed,bug
+GH-665254463,Azure.Storage.Queues/README.md has incorrect example for accessing Queues using AzureIdentity,"This example code is incorrect:
+https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/README.md#authenticating-with-azureidentity
+``` c#
+// Create a QueueClient that will authenticate through Active Directory
+Uri accountUri = new Uri(""https://MYSTORAGEACCOUNT.blob.core.windows.net/"");
+QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
+```
+
+It should be like:
+``` c#
+// Create a QueueClient that will authenticate through Active Directory
+Uri accountUri = new Uri(""https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME"");
+QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
+```",StefH,Standard,Azure/azure-sdk-for-net,GitHub Issue,2020-07-24T15:43:20Z,Azure/azure-sdk-for-net,https://github.com/Azure/azure-sdk-for-net/issues/13716,closed,"Storage, Service Attention, Client, customer-reported, bug"
+GH-2000849729,[Bug] create a subpage of subpage cannot rename,"### Bug Description
+
+I noticed a bug when creating this example. If you add a subpage, this new page is highlighted. If you then click on the plus sign on this page to create a subpage there too, the name is not applied when you click on OK. 
+
+### How to Reproduce
+
+as described in the description
+
+### Expected Behavior
+
+I'm able to rename it via the dialog when creating a subpage of subpage
+<img width=""411"" alt=""image"" src=""https://github.com/AppFlowy-IO/AppFlowy/assets/12026239/19730766-1bba-4ae4-baa4-d4ea067c2845"">
+
+
+### Operating System
+
+macOS
+
+### AppFlowy Version(s)
+
+v0.3.8
+
+### Screenshots
+
+_No response_
+
+### Additional Context
+
+_No response_",annieappflowy,Standard,AppFlowy-IO/appflowy,GitHub Issue,2023-11-19T13:23:05Z,AppFlowy-IO/appflowy,https://github.com/AppFlowy-IO/AppFlowy/issues/3966,closed,bug
+GH-1028041365,NumberPlane not showing it's lines,"### Describe the bug
+I have used manimgl before but after changing the version (almost 4-5 months old) with new version, whenever i am running the example scene (**OpeningManimExample**), the lines in the **NumberPlane** is not showing.
+**Image**
+![Screenshot (394)](https://user-images.githubusercontent.com/60939745/137588140-c671e317-67aa-43ba-8d6e-0e20f110a645.png)
+
+**Version Used**:
+Manim - 1.1.0",aburousan,Standard,3b1b/manim,GitHub Issue,2021-10-16T12:51:21Z,3b1b/manim,https://github.com/3b1b/manim/issues/1652,closed,bug
+GH-2122226918,Fetching logs for an app fails,"<!-- Thanks for the bug report! -->
+
+When fetching logs for an app that have many log entries, the CLI fails with the following error messsage,
+
+```sh
+$ wasmer app logs <app-name>
+thread 'main' panicked at 'range end index 1000 out of range for slice of length 10', /home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/wasmer-edge-cli-0.1.4/src/cmd/app/logs.rs:113:25
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+I've made sure there are logs for the app, and those logs can be fetched via the registry.
+
+### Steps to reproduce
+```sh
+$ wasmer app logs <app-name>
+thread 'main' panicked at 'range end index 1000 out of range for slice of length 10', /home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/wasmer-edge-cli-0.1.4/src/cmd/app/logs.rs:113:25
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+### Expected behavior
+Logs for the app should appear.
+
+### Actual behavior
+The CLI errors out.
+
+
+Could be related to #4441",ayys,Standard,wasmerio/wasmer,GitHub Issue,2024-02-07T05:34:51Z,wasmerio/wasmer,https://github.com/wasmerio/wasmer/issues/4442,closed,"bug, 📦 lib-cli, priority-high, edge-cli"
+GH-2102629478,Exported object names not minified since 5.79,"### Discussed in https://github.com/webpack/webpack/discussions/17988
+
+<div type='discussions-op-text'>
+
+<sup>Originally posted by **vjhebbar** January 21, 2024</sup>
+Hello,
+
+Since I updated to webpack 5.79+ in my project, bundle sizes have increased because some exported object names are not minified.
+
+It turns out that this is due to those objects being destructured in modules where they are imported. 
+Refactoring the code to remove the object destructuring minimizes the name again. 
+
+Prior to 5.79, the names were minified regardless of the use of destructuring. 
+
+Is this behavior aligned with #16941?
+
+If this is not expected behavior, I'll share my configs and minimum reproducible code.
+
+Looking forward to your thoughts and suggestions.
+
+The latest version where the issue is reproducible is 5.90.
+</div>",alexander-akait,Standard,webpack/webpack,GitHub Issue,2024-01-26T17:49:15Z,webpack/webpack,https://github.com/webpack/webpack/issues/18013,closed,bug
+GH-2336193931,ItemsSource breaks with AOT,"### Describe the bug
+
+1. If you set the source for a collection control in XAML, you'll get an unhandled win32 exception;
+2. If you set the source in code it'll run until you try to modify the collection. You'll get the same exception then.
+
+### Steps to reproduce the bug
+
+[Repro](https://github.com/eduardobragaxz/AOTRepro)
+
+### Expected behavior
+
+_No response_
+
+### Screenshots
+
+_No response_
+
+### NuGet package version
+
+None
+
+### Windows version
+
+Windows 11 (22H2): Build 22621
+
+### Additional context
+
+1.6 experimental 1",eduardobragaxz,Standard,microsoft/microsoft-ui-xaml,GitHub Issue,2024-06-05T15:16:22Z,microsoft/microsoft-ui-xaml,https://github.com/microsoft/microsoft-ui-xaml/issues/9699,closed,"bug, area-AOT"
+GH-2055596954,Wrong css file name mentioned in the tutorial,"### Describe the problem that you experienced
+
+in the section ""3 - Add the styles for the component"", it is written `Open src/app/housing-location/housing-location.css, and paste the styles below into the file...`
+
+should be `housing-location.component.css` instead of `housing-location.css` I guess ? 
+
+### Enter the URL of the topic with the problem
+
+https://angular.dev/tutorials/first-app/HousingLocation#create-the-housinglocationcomponent
+
+### Describe what you were looking for in the documentation
+
+_No response_
+
+### Describe the actions that led you to experience the problem
+
+_No response_
+
+### Describe what you want to experience that would fix the problem
+
+_No response_
+
+### Add a screenshot if that helps illustrate the problem
+
+_No response_
+
+### If this problem caused an exception or error, please paste it here
+
+_No response_
+
+### If the problem is browser-specific, please specify the device, OS, browser, and version
+
+_No response_
+
+### Provide any additional information here in as much as detail as you can
+
+_No response_",ragulan77,Standard,angular/angular,GitHub Issue,2023-12-25T10:36:05Z,angular/angular,https://github.com/angular/angular/issues/53696,closed,"help wanted, state: has PR, good first issue, P3, area: adev"
+GH-1708114317,[core] Decompilation of for-each loop failed,"I reduced a complex failing method to a single for each loop, that can't be decompiled. Tested with latest git and any combination of openjdk8/11 and use-dx:
+
+```java
+import java.util.List;
+
+public class LoopTest {
+  public void testLoop(List<Object> objects) {
+    for (Object o : objects) {
+      if ((o.hashCode() != 42) || (o.hashCode() != 1)) {
+        break;
+      }
+    }
+  }
+}
+```",nitram84,Standard,skylot/jadx,GitHub Issue,2023-05-12T19:36:12Z,skylot/jadx,https://github.com/skylot/jadx/issues/1866,closed,"bug, Core"
+GH-1259927324,Crash when deleting words in Vocabulary builder,"* KOReader version: v2022.05.1-14
+* Device: PB 628
+
+#### Issue
+While trying to delete a word in the new plugin ""Vocabulary builder"" a crash occurred.
+I give you the crash file
+_(deleted)_",ichnilatis-gr,Standard,koreader/koreader,GitHub Issue,2022-06-03T13:36:25Z,koreader/koreader,https://github.com/koreader/koreader/issues/9162,closed,"bug, Plugin"
+GH-1879451868,[bug]node index broken,"<!--
+If possible fill each section
+-->
+
+# Bug report
+some node method missing in index.
+such as https://nodejs.org/dist/latest-v18.x/docs/api/stream.html#readablepipedestination-options
+
+## Steps to reproduce
+search `readable.pipe` in node's docs.
+
+## More resources
+the method `readable.push` that is in the same class exists in index.",CzBiX,Standard,freeCodeCamp/devdocs,GitHub Issue,2023-09-04T03:42:30Z,freeCodeCamp/devdocs,https://github.com/freeCodeCamp/devdocs/issues/2048,closed,bug
+GH-390485085,document regarding git_time_t should be clear about its unit,"### Reproduction steps
+
+This is a documentation bug. Wherever the type git_time_t is mentioned in the document or in the example, there is no mentioning of its unit. 
+
+Is this the milliseconds since the Epoch or the seconds since the Epoch?
+
+
+
+https://github.com/libgit2/libgit2/commit/b5c00c6d41ff4eb809f7deda38fe61ccaacb7cbf
+
+https://libgit2.org/libgit2/#HEAD/group/signature/git_signature_new
+
+Similarly in examples, large, incomprehensible integers are used for git_time_t, hard to understand what they mean.
+
+https://libgit2.org/libgit2/ex/HEAD/general.html#git_signature_new-80
+
+
+  git_signature_new(&author,
+      ""Scott Chacon"", ""schacon@gmail.com"", 123456789, 60);
+  git_signature_new(&committer,
+      ""Scott A Chacon"", ""scott@github.com"", 987654321, 90);
+
+
+### Expected behavior
+
+The document should be clear about the type's meaning. the current description ""time when the action happened"" isn't a very useful guide on using this api.
+
+### Actual behavior
+
+### Version of libgit2 (release number or SHA1)
+b5c00c6d41ff4eb809f7deda38fe61ccaacb7cbf
+### Operating system(s) tested
+n/a",shi-yan,Standard,libgit2/libgit2,GitHub Issue,2018-12-13T01:55:40Z,libgit2/libgit2,https://github.com/libgit2/libgit2/issues/4908,closed,"up for grabs, easy fix, documentation"
+GH-569050931,Unable to use guard in `handle_event/3`,"We are unable to pattern match in the function declaration and use the resulting assignments in a guard.
+
+For example, this code:
+
+```elixir
+def handle_event(event, %{""id"" => id}, socket) when id in [""foo""] do
+  {:noreply, socket}
+end
+```
+
+...raises the following compiler error:
+
+```
+== Compilation error in file lib/fe_web/live/editor.ex ==
+** (CompileError) lib/fe_web/live/editor.ex:765: cannot find or invoke local id/0 inside guard. Only macros can be invoked in a guard and they must be defined before their invocation. Called as: id()
+    (stdlib 3.11) lists.erl:1354: :lists.mapfoldl/3
+    (elixir 1.10.1) expanding macro: Kernel.in/2
+    (fe_web 0.1.0) lib/fe_web/live/editor.ex:765: FeWeb.Editor.__has_event_handler__?/1
+    (surface 0.1.0) lib/editor.ex:1: Surface.EventValidator.__before_compile__/1
+    (elixir 1.10.1) lib/kernel/parallel_compiler.ex:233: anonymous fn/4 in Kernel.ParallelCompiler.spawn_workers/7
+```
+
+Guards still work if you are not pattern matching and assigning variables from inside of a map. For example, this still works:
+
+```elixir
+def handle_event(event, _data, socket) when event in [""foo""] do
+  {:noreply, socket}
+end
+```",cadebward,Standard,surface-ui/surface,GitHub Issue,2020-02-21T16:18:41Z,surface-ui/surface,https://github.com/surface-ui/surface/issues/41,closed,bug
+GH-2068788571,Match options overridden,"When resolving merge conflicts within https://github.com/crystal-lang/crystal/pull/13353/commits/a77c516812a85d2855e382995d5ebbb45e7c550b, it was missed that `#split` and `#scan` override the `options` variable to `None` regardless of what the user passed in. I can't imagine this being expected behavior.
+
+This leads to some subtle bugs such as:
+```crystal
+""Hello, World"".rindex(/[ ]+/, options: :anchored) # => 6
+```
+when it should in fact be `nil`.",Blacksmoke16,Standard,crystal-lang/crystal,GitHub Issue,2024-01-06T19:17:02Z,crystal-lang/crystal,https://github.com/crystal-lang/crystal/issues/14177,closed,"kind:bug, good first issue, topic:stdlib:text"
+GH-507251228,Make (at least a subset of) vimtex functionality available from within bib files,"I understand that vimtex's documentation states that it is not a `ftplugin` for `bib` files. 
+
+It is so common a workflow to edit `bib` files when working on a latex project. Can at least a subset of functionality be made available from within `bib` files? The following should be harmless
+
+- make the text objects available (particularly useful in 'symbols' bib file for `bib2gls`)
+- syntax highlighting
+- interface to the compiler (maybe all main file detection routines except the magic comments)
+- indentation
+
+I'd leave the sort-by-key, validation, linting etc  to specialised bib tools, but clearly one could argue that a latex plugin isn't complete with some bib support. (especially since vimtex has gone so far to support `listings, minted, subfiles` and other external packages)",krishnakumarg1984,Standard,lervag/vimtex,GitHub Issue,2019-10-15T13:38:03Z,lervag/vimtex,https://github.com/lervag/vimtex/issues/1517,closed,enhancement
+GH-1377847017,"Pressing ""Search"" again while viewing duplicates freezes UI","Czkawka Flatpak v5.0.2
+Linux Mint 20.3 Cinnamon
+
+1. Open Czkawka and select /home/username folder (mine's about 250GB)
+2. Select ""Duplicate files"" from the sidebar and click the ""Search"" button
+3. Wait for it to finish (there will be a popup showing progress)
+4. Delete some duplicate files manually (i.e. open them from the File Explorer and send them to Trash, or use `rm` from the terminal
+5. Got back to Czkawka and press ""Search"" again 
+6. UI freezes
+
+There is no popup showing progress. Not sure if there is a scan happening, but I've left it on for about 20 mins and it hasn't finished.
+
+There should either be a popup showing the (re)scan progress (if that's what's happening) or otherwise, the ""Search"" button label should change. The UI is also completely unresponsive and I had to just force quit the program.",AndreiMiculita,Standard,qarmin/czkawka,GitHub Issue,2022-09-19T12:02:56Z,qarmin/czkawka,https://github.com/qarmin/czkawka/issues/838,closed,bug
+GH-607048693,Typo?,"This might be really trivial or small but I just want to know this this right here https://github.com/crystal-lang/crystal/blob/4401e90f001c975838b6708cc70868f18824d1e5/src/string.cr#L3703 is a typo or not
+""ond""",TorchedSammy,Standard,crystal-lang/crystal,GitHub Issue,2020-04-26T16:11:23Z,crystal-lang/crystal,https://github.com/crystal-lang/crystal/issues/9181,closed,"kind:bug, kind:docs, good first issue"
+GH-1550951448,Floating hint textblock cut off for right-aligned fields,"### Bug explanation
+
+Bug possibly introduced with #3041 
+
+When setting a HorizontalContentAlignment to right, the hint is cut off as it matches the width of the entered text.
+
+![image](https://user-images.githubusercontent.com/19147840/213723783-8e14ae3c-5b2e-4f26-8c91-72ad2e81210b.png)
+
+When entering longer text, the hint expands to show the full text but given the width of the Textbox it should always be visible.
+
+![image](https://user-images.githubusercontent.com/19147840/213723942-7edaa70f-2585-48b3-8bff-d9abe135989b.png)
+
+
+
+### Version
+
+4.7.1",yosefmah,Standard,MaterialDesignInXAML/MaterialDesignInXamlToolkit,GitHub Issue,2023-01-20T14:36:01Z,MaterialDesignInXAML/MaterialDesignInXamlToolkit,https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/issues/3055,closed,bug
+GH-505520148,Ajax requests not setting additional HTTP headers,"When performing an Ajax request, additional HTTP headers are discarded; in particular, the following code does not set the header `X-My-HTTP-Header` (checking in Chrome's Developer Tools, the header does not appear).
+```js
+$.ajax({
+    method: ""GET"",
+    url: ""/example"",
+    headers: {""X-My-HTTP-Header"": ""HelloHeader""}
+});
+```
+
+
+After some debugging, I discovered that the problem may be a wrong call to `$.each` in line 1874 of [this file](https://cdn.metroui.org.ua/v4/js/metro.js) (or, if I understand correctly the project building process, in line 1859 of [m4q.js](https://github.com/olton/Metro-UI-CSS/blob/master/source/m4q/m4q.js)). The particular portion of code is
+```js
+if (p.headers) {
+    $.each(function(k, v){
+        xhr.setRequestHeader(k, v);
+        headers.push(k);
+    });
+}
+```
+Adding the missing `p.headers` in the `$.each` function call would solve the problem:
+```js
+if (p.headers) {
+    $.each(p.headers, function(k, v){
+        xhr.setRequestHeader(k, v);
+        headers.push(k);
+    });
+}
+```",mclytar,Standard,olton/Metro-UI-CSS,GitHub Issue,2019-10-10T21:26:49Z,olton/Metro-UI-CSS,https://github.com/olton/Metro-UI-CSS/issues/1427,closed,"bug, Fixed"
+GH-1693626672,"apple.zsh-theme, broken apple () sign MacOS","### Describe the bug
+
+in the latest version of apple.zsh-theme, the ""deprecated"" apple logo was replaced, and it doesn’t seem to show up properly. 
+
+
+
+### Steps to reproduce
+
+On my Mac it looks like so:
+<img width=""50"" alt=""image"" src=""https://user-images.githubusercontent.com/123403376/235865271-98fa1c95-3e19-4994-bcf8-a2e321b25f52.png"">
+Even when inspected on GitHub, there seems to be an issue:
+![image](https://user-images.githubusercontent.com/123403376/235865014-b0c17d44-d284-401c-ba20-0c6e7a6f82f7.png)
+
+### Expected behavior
+
+Changing the code by using the Option+Shift+K shortcut to type the  logo fixes the issue for me:
+<img width=""136"" alt=""image"" src=""https://user-images.githubusercontent.com/123403376/235866345-c0bcc7ea-14db-4c7f-831d-3ee6629747b3.png"">
+
+### Screenshots and recordings
+
+_No response_
+
+### OS / Linux distribution
+
+macOS 13.3.1 (a)
+
+### Zsh version
+
+5.9
+
+### Oh My Zsh version
+
+master (dab09cc)
+
+### Terminal emulator
+
+Default macOS Terminal
+
+### If using WSL on Windows, which version of WSL
+
+None
+
+### Additional context
+
+_No response_",cybernester,Standard,ohmyzsh/ohmyzsh,GitHub Issue,2023-05-03T08:33:45Z,ohmyzsh/ohmyzsh,https://github.com/ohmyzsh/ohmyzsh/issues/11665,closed,Bug
+GH-1051824705,I have a lot of problems with ERB,"I decided to move my project to a newer version of the ERB, but I get all kinds of errors, even at the point of installing packages.
+I'm 99% sure I'm the problem, but I can't find the solution.
+
+- Error loading fonts
+- Error loading less (I added the less-loader to the webpack config)
+- Error installing packages
+- Error compilling
+
+![image](https://user-images.githubusercontent.com/81296950/141453760-b3c1242b-bf53-440c-9846-59a27f4bf6d1.png)
+
+![image](https://user-images.githubusercontent.com/81296950/141454035-88af5f09-ccd1-400f-a034-2b0447e98771.png)
+
+This is the third time I have had the headache of trying to migrate a project to a new version of ERB (as of this writing)
+
+The packages I installed:
+
+- antd
+- axios
+- uuid
+- classnames
+- discord-rpc
+- electron-dl
+- formik
+- fs-extra
+- json-prune
+- imgur
+- less
+- less-loader
+- node-localstorage
+
+Please help me, I don't understand something.
+
+Thanks",LIMPIX31,Standard,electron-react-boilerplate/electron-react-boilerplate,GitHub Issue,2021-11-12T10:45:54Z,electron-react-boilerplate/electron-react-boilerplate,https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/3036,closed,bug
+GH-511338873,Non-empty files filled with zeros,"A few reports of desktop app saving files with a reasonable looking file size, but the content is all zeros.",davidjgraph,Standard,jgraph/drawio-desktop,GitHub Issue,2019-10-23T13:52:10Z,jgraph/drawio-desktop,https://github.com/jgraph/drawio-desktop/issues/170,closed,bug
+GH-2277808281,Spring version mismatch between master and latest ?,"## Describe the Bug
+Pulling image openzipkin/zipkin:latest yield
+spring-boot-3.2.4
+spring - 6.1.5
+
+in master the pom.xml stated
+    <spring-boot.version>3.2.5</spring-boot.version>
+    <spring.version>6.1.6</spring.version>
+
+There are critical vulnerability with 6.1.5 that is fixed in 6.1.6
+CVE-2024-22243
+CVE-2024-22259
+CVE-2024-22262
+
+## Steps to Reproduce
+just pull the image and inspect BOOT-INF/lib seeing 
+spring-boot-3.2.4.jar
+spring-core-6.1.5.jar
+
+## Expected Behaviour
+spring-boot should be at 3.2.5 and spring should be at 6.1.6",weiluo8791,Standard,openzipkin/zipkin,GitHub Issue,2024-05-03T14:32:21Z,openzipkin/zipkin,https://github.com/openzipkin/zipkin/issues/3768,closed,bug
+GH-2450786537,[Bug]: Incorrect definition of date data type,"### Is the bug applicable and reproducable to the latest version of the package and hasn't it been reported before?
+
+- [X] Yes, it's still reproducable
+
+### What version of Laravel Excel are you using?
+
+3.1.47
+
+### What version of Laravel are you using?
+
+9.49.0
+
+### What version of PHP are you using?
+
+8.2.20
+
+### Describe your issue
+
+In the excel file, the sum_usd field was mistakenly set as a data type as a date without a year, and looks like a simple floating-point number. The bug is that the library defined it as a large number (check image)
+![Снимок экрана 2024-08-06 в 15 37 03](https://github.com/user-attachments/assets/74f9fc7a-709d-4484-a2b7-1d2ecab76ee0)
+I tried to parse this file using another library, and it determined the data type correctly
+file to reproduce:
+[new testc.xlsx](https://github.com/user-attachments/files/16510259/new.testc.xlsx)
+
+
+### How can the issue be reproduced?
+
+file attached
+
+### What should be the expected behaviour?
+
+type should be determined correcty",Kladislav,Standard,SpartnerNL/Laravel-Excel,GitHub Issue,2024-08-06T12:39:52Z,SpartnerNL/Laravel-Excel,https://github.com/SpartnerNL/Laravel-Excel/issues/4180,closed,bug
+GH-1192819568,Gradient fill doesn't work in iOS but it works correctly in Web & Android,"<!--
+## Lottie-iOS Issue
+Hello! Sorry you're having an Issue! Please help us make Lottie better by filling everything below out with as much information as you can, so we can try to reproduce and fix the issue!
+-->
+
+## Check these before submitting:
+- [x] The issue doesn't involve an [Unsupported Feature](https://github.com/airbnb/lottie-ios/blob/master/README.md#supported-after-effects-features)
+- [x] This issue isn't related to another open issue
+
+## This issue is a:
+- [x] Non-Crashing Bug (Visual or otherwise)
+- [ ] Crashing Bug
+- [ ] Feature Request
+- [ ] Regression (Something that once worked, but doesn't work anymore)
+
+## Which Version of Lottie are you using?
+
+Lottie 3.3.0
+
+## What Platform are you on? 
+<!-- (Specify Platform Version) -->
+- [ ] MacOS
+- [x] iOS
+
+## What Language are you in?
+- [x] Swift
+- [ ] Objective-C
+
+## Expected Behavior 
+
+![Screen Shot 2022-04-05 at 15 39 19](https://user-images.githubusercontent.com/17875522/161713957-85965c66-9317-4643-aa32-224ab892bd77.png)
+
+
+## Actual Behavior
+
+![Screen Shot 2022-04-05 at 10 10 07](https://user-images.githubusercontent.com/17875522/161713993-6a8a6281-0098-4c23-ba38-9931f34908fb.png)
+
+
+## Code Example
+n/a
+
+## Animation JSON
+
+I sent the email with title
+```
+#1541 - Gradient fill doesn't work in iOS but it works correctly in Web & Android
+```",markgravity,Standard,airbnb/lottie-ios,GitHub Issue,2022-04-05T08:42:14Z,airbnb/lottie-ios,https://github.com/airbnb/lottie-ios/issues/1541,closed,bug
+GH-347069647,Stale index pattern cache on client when Index-patterns loaded via server API calls,"**Kibana version:** Master
+
+**Steps to reproduce:**
+1. Start with a fresh `.kibana` index that does not have any saved objects
+2. Load index-pattern saved objects from either a beat or from kibana at `/app/kibana#/home/tutorial/apm` using the ""Load kibana objects"" button
+3. Go to discover application. Notice the error message `No matching indices found: No indices match pattern ""apm-*""`, yet if you go to the saved object management page, there is an index-pattern with the title ""apm-*""
+
+<img width=""1228"" alt=""screen shot 2018-08-02 at 9 39 28 am"" src=""https://user-images.githubusercontent.com/373691/43594670-0d4f444c-9638-11e8-8572-67ad7c880fe9.png"">",nreese,Standard,elastic/kibana,GitHub Issue,2018-08-02T15:45:13Z,elastic/kibana,https://github.com/elastic/kibana/issues/21596,closed,"bug, blocker, v6.4.0"
+GH-1342933907,Page jumps when recharts tries to render tooltip that doesn't fit into view,"- [x] I have searched the [issues](https://github.com/recharts/recharts/issues) of this repository and believe that this is not a duplicate.
+
+### Reproduction link
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tooltip-2-1-13-jumping-88q51f?file=/src/App.tsx)
+
+### Steps to reproduce
+scroll to the bottom so that the chart is barely visible, then move your mouse to the chart
+
+### What is expected?
+I would expect the tooltip to render outside of the view, without page jumping
+
+### What is actually happening?
+Once you hover on a chart, recharts tries to render the tooltip and scrolls view to make the tooltip fit into the view
+
+![Untitled](https://user-images.githubusercontent.com/4257937/185380069-0eca235e-0618-4c5d-b1a8-683640e46bdb.gif)
+
+
+| Environment | Info |
+|---|---|
+| Recharts | v2.1.13 |
+| React | 17.0.1 |
+| System | macOS Montrey 12.4 |
+| Browser | Chrome Version 104.0.5112.79 (Official Build) (x86_64) |
+
+---
+
+
+<!-- generated by reccharts-issue-helper. DO NOT REMOVE -->",liubko,Standard,recharts/recharts,GitHub Issue,2022-08-18T11:02:07Z,recharts/recharts,https://github.com/recharts/recharts/issues/2943,closed,bug
+GH-2291455693,Property setNamespace not found on String and there is no default value.,"### Describe the bug
+
+Trying to run an Adobe Flex application generates the following error:
+ERROR core\src\avm2\events.rs:428 Error dispatching event EventObject(EventObject { type: ""load"", class: mx.rpc.soap::LoadEvent, ptr: 0xa362968 }) to handler FunctionObject(FunctionObject { ptr: 0x513260 , name: Ok(""com.terna.utils::WebService/InternalLoadHandler()"") }) : ReferenceError: Error #1069: Property setNamespace not found on String and there is no default value.
+
+The custom function ""com.terna.utils::WebService/InternalLoadHandler()"" is nothing more than a handler of the ""mx.rpc.soap::LoadEvent"" event which should be invoked by the ""mx.rpc.soap.mxml.WebService()"" class when you want to invoke a SOAP WebService, at the time the WSDL is loaded, after the ""loadWSDL"" method has been executed.
+
+The error also occurs when leaving the event handler empty, so it probably occurs right before or right after its invocation.
+
+### Expected behavior
+
+No exception and correct management of WSDL loading and parsing.
+
+### Content Location
+
+It's a complex application that cannot be run outside the enteprise environment because of early interaction with Electron runtime and integration web services.
+
+### Affected platform
+
+Self-hosted version
+
+### Operating system
+
+Windows 10
+
+### Browser
+
+Firefox 125
+
+### Additional information
+
+_No response_",falpi,Standard,ruffle-rs/ruffle,GitHub Issue,2024-05-12T18:52:53Z,ruffle-rs/ruffle,https://github.com/ruffle-rs/ruffle/issues/16298,closed,"bug, avm2, xml"
+GH-2147105902,Icons not found,"<!-- ⚠️ Please DON'T ignore the issue template -->
+
+<!-- 💡 Consider upgrading to the latest version before sending the issue -->
+
+**Describe the bug**
+I am trying to add icons to my slides, but it is not working. I am using the component as in the guide:
+`<uim-rocket class=""text-3xl text-orange-400 animate-ping"" />`
+
+And the next error appears:
+`Internal server error: Icon 'uim/rocket' not found`
+
+**Desktop (please complete the following information):**
+ - OS: Ubuntu
+ - Browser: Firefox 
+ - Slidev version: v0.48.0-beta.5",carlogarro,Standard,slidevjs/slidev,GitHub Issue,2024-02-21T15:52:43Z,slidevjs/slidev,https://github.com/slidevjs/slidev/issues/1323,closed,"bug, has workaround"
+GH-2387083036,Tree expand issue in DevTools,"### Describe the bug
+
+In the DevTools, if we want to expand a node without selecting the node first, the scrollviewer return to the offset Y 0. this is annoying when the tree is deep like in this gif :
+
+![tree expand in devtools](https://github.com/AvaloniaUI/Avalonia/assets/4248852/b985f41e-47d1-42e3-a54a-b064ad738f9f)
+
+
+
+### To Reproduce
+
+activate the DevTools, open some nodes in the tree without selecting the node
+
+### Expected behavior
+
+The expected behaviour (like in 0.10.x) is to be able to open a node without selecting it and stay at the current offset Y
+
+### Avalonia version
+
+11.0.10 11.0.11 11.1.xxx
+
+### OS
+
+Windows, macOS
+
+### Additional context
+
+_No response_",Whiletru3,Standard,AvaloniaUI/Avalonia,GitHub Issue,2024-07-02T20:13:47Z,AvaloniaUI/Avalonia,https://github.com/AvaloniaUI/Avalonia/issues/16204,closed,"bug, area-dev-tools"
+GH-1315110128,Purge: SQL error is displayed when the photo ID of a file is missing,"#### 1. What is not working as documented?
+
+sql error in log
+
+`ERRO[2022-07-22T14:46:13Z] files: Error 1052: Column 'photo_uid' in where clause is ambiguous (regenerate photo_taken_at)`
+
+#### 2. How can we reproduce it?
+
+Steps to reproduce the behavior:
+
+run purge command
+
+#### 3. What behavior do you expect?
+
+no sql error 
+
+#### 4. What could be the cause of your problem?
+
+#### 5. Can you provide us with example files for testing, error logs, or screenshots?
+
+https://gist.github.com/centralhardware/db6dfd610500784a8ea3c9ed9e333a06
+
+#### 6. Which software versions do you use?
+
+(a) PhotoPrism Architecture & Build Number: lastest docker - 220629-5d7448d2-Linux-AMD64
+
+(b) Database Type & Version:  Version: '10.7.4-MariaDB-1:10.7.4+maria~focal'
+
+#### 7. On what kind of device is PhotoPrism installed?
+
+#### 8. Do you use a Reverse Proxy, Firewall, VPN, or CDN?
+
+If yes, please specify type and version. You can skip this if you are reporting a completely unrelated issue.",centralhardware,Standard,photoprism/photoprism,GitHub Issue,2022-07-22T14:55:21Z,photoprism/photoprism,https://github.com/photoprism/photoprism/issues/2540,closed,"bug, released, tested"
+GH-1613881038,Cannot click tiles to move objects,"#### Brief description of the issue
+When pulling an item, like a crate, you were able to click a tile to move it there. It does not seem to work anymore.
+#### What you expected to happen
+Move a crate from tile A to tile B by clicking on tile B while pulling the crate.
+#### What actually happened
+Absolutely nothing.
+#### Steps to reproduce
+Pull an object. Click a turf. Nothing happens.
+#### Additional info:
+ - **Server Revision**: Found using the ""Show Server Revision"" verb under the OOC tab.
+ - **Anything else you may wish to add** (Location if it's a mapping issue, etc)",Sypsoti,Standard,PolarisSS13/Polaris,GitHub Issue,2023-03-07T17:17:26Z,PolarisSS13/Polaris,https://github.com/PolarisSS13/Polaris/issues/9037,closed,Bug
+GH-2044300153,Changing the Email Address of a Invited Expense,"**Describe the bug**
+
+This issue was reported at the slack thread; https://opencollective.slack.com/archives/GFH4N961L/p1702663040491629. Trying to change the email address of an already submitted expense invite seems to error out giving; 
+
+![image](https://github.com/opencollective/opencollective/assets/12435965/d3ab8d2b-ffd3-41ab-a3c2-d975efbc99be)
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to a collective and invite an expense (make sure to choose a non existing user on the platform; i.e: set the name and email manually)
+2. Go to the draft expense submitted and click on the actions button and edit the expense
+3. Change the email address and try to save
+4. See error
+
+**Expected behavior**
+
+A payout method should not be expected from an expense that is invited; since the user is going to set the payout method in the future.",SudharakaP,Standard,opencollective/opencollective,GitHub Issue,2023-12-15T19:57:24Z,opencollective/opencollective,https://github.com/opencollective/opencollective/issues/7163,closed,"bug, frontend, P2"
+GH-1092479969,error occurred when joining <channel> with user token,"# Bug report
+
+Have secure channels turned on with JWT and this has been working fine for some time (sending the JWT in as param apikey).
+
+However, following a recent update to the realtime server project we are now getting an error joining channels:
+
+`error occurred when joining <channel> with user token`.
+
+I have updated the JS client and attempted to use the JWT as the `user_token` but this had no effect.
+
+I may be missing something obvious but the docs were not immediately clear and I couldn't find any additional info related to this error.
+
+## Additional context
+
+`
+{""event"":""phx_reply"",""payload"":{""response"":{""reason"":""error occurred when joining realtime:<redacted> with user token""},""status"":""error""},""ref"":""3"",""topic"":""realtime:<redacted>""}
+`",neilkinnish,Standard,supabase/realtime,GitHub Issue,2022-01-03T12:43:17Z,supabase/realtime,https://github.com/supabase/realtime/issues/217,closed,bug
+GH-1355848673,Generating on Finetuned M2M100 models,"Hi, 
+
+When I generate from a model finetuned from M2M100, it shows that: 
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument index in method wrapper__index_select)
+
+How to fix this issue?
+
+Thanks!",i55code,Standard,facebookresearch/fairseq,GitHub Issue,2022-08-30T14:20:19Z,facebookresearch/fairseq,https://github.com/facebookresearch/fairseq/issues/4677,closed,"bug, needs triage"
+GH-2167742641,Mouse and keyboard input out of sync after popup window,"### Please fill out the following:
+- **Sway Version:**
+sway version 1.10-dev-5e18ed3c (Mar  4 2024, branch 'master')
+
+- **Debug Log:**
+In comment
+
+- **Description:**
+
+This is a regression because this didn't occur before.
+
+Steps to reproduce
+  - Open up vscode
+  - Open a popup
+  - Mouse input now is nowhere to be found
+    - Need to go through each individual window to find where the mouse input is to restore mouse input
+  - Keyboard input continues to work correctly dispite mouse input not sending events to correct window
+
+
+Video: 
+https://github.com/swaywm/sway/assets/8345320/50356754-1136-469b-8d2d-d758140318e4",kamiyaa,Standard,swaywm/sway,GitHub Issue,2024-03-04T20:59:51Z,swaywm/sway,https://github.com/swaywm/sway/issues/8036,closed,bug
+GH-475623692,[Bug Report] No margin between the prepend-icon and v-text-field / v-select when RTL is enabled,"### Environment
+**Vuetify Version:** 2.0.3
+**Last working version:** 1.5.16
+**Vue Version:** 2.6.10
+**Browsers:** Google Chrome
+**OS:** Windows 10
+
+### Steps to reproduce
+Use a v-text-field /v-select (checked with these controls, but might be not isolated to them) with prepend-icon and RTL enabled.
+
+### Expected Behavior
+A margin between the icon and the field.
+
+### Actual Behavior
+There's a margin from the right side of the icon, i.e. RTL is not taken into account.
+
+### Reproduction Link
+<a href=""https://codepen.io/desya/pen/eqRxJE"" target=""_blank"">https://codepen.io/desya/pen/eqRxJE</a>
+
+
+<!-- generated by vuetify-issue-helper. DO NOT REMOVE -->",desyatnik,Standard,vuetifyjs/vuetify,GitHub Issue,2019-08-01T11:15:47Z,vuetifyjs/vuetify,https://github.com/vuetifyjs/vuetify/issues/8241,closed,"T: bug, good first issue, C: VInput, rtl"
+GH-678673074,Can't edit an asset from SELECT section when it's not loaded in the BROWSE section,"<!--
+Hello 👋 Thank you for submitting an issue.
+
+Before you start, please make sure your issue is understandable and reproducible.
+To make your issue readable make sure you use valid Markdown syntax.
+
+https://guides.github.com/features/mastering-markdown/
+
+Please ensure you have also read and understand the contributing guide.
+
+https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md#reporting-an-issue
+-->
+
+**Describe the bug**
+When I try to edit an already uploaded file from within the ""selected assets"" view, I get a JS error indicating it can't find my selected file.
+
+**Steps to reproduce the behavior**
+
+1. Go to a content type with a ""multiple media"" field
+2. Click on the ""+"" icon to ""add a new file""
+3. Click on the ""selected"" tab
+4. Click on the edit icon of a selected image
+
+**Expected behavior**
+I expect an edit view on the selected file to open where I can edit the files name, alternative text etc.
+
+**Screenshots**
+![Screenshot_20200813_205528](https://user-images.githubusercontent.com/11271614/90175245-6ca12b00-dda7-11ea-969e-cd7ab5dbb0dd.png)
+![Screenshot_20200813_205823](https://user-images.githubusercontent.com/11271614/90175460-c0ac0f80-dda7-11ea-9c0e-93b94c8c7c91.png)
+
+**System**
+
+- Node.js version: v14.5.0
+- NPM version: 6.14.6
+- Strapi version: 3.1.4
+- Database: sqlite
+- Operating system: Manjaro linux",wesselvanderlinden,Standard,strapi/strapi,GitHub Issue,2020-08-13T19:10:09Z,strapi/strapi,https://github.com/strapi/strapi/issues/7458,closed,"issue: bug, severity: medium, good first issue, source: core:upload"
+GH-369888797,Fixing the rendering of the Constraints section in the docs.,"https://keras.io/constraints/ is badly rendered. There is a lot of text missing. This can come from one of those two things:
+
+The file https://github.com/keras-team/keras/blob/master/docs/autogen.py which is responsible for grabbing the docstrings and making a markdown file.
+
+The file https://github.com/keras-team/keras/blob/master/keras/constraints.py if something has a strange syntax.
+
+Actually it is also possible to use git bisect (magical tool, incredibly useful) to pinpoint which commit broke this page in the documentation. This is a good opportunity to learn how to use it. Once we know which commit broke the page, it will be easy to find out how to fix it. To learn how to use git bisect, see https://www.metaltoad.com/blog/beginners-guide-git-bisect-process-elimination .",gabrieldemarmiesse,Standard,keras-team/keras,GitHub Issue,2018-10-14T10:31:18Z,keras-team/keras,https://github.com/keras-team/keras/issues/11382,closed,"stat:contributions welcome, type:docs, Good first issue"

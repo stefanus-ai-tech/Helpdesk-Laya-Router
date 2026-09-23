@@ -7,21 +7,69 @@ import sqlite3
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from threading import Lock, Thread
+from time import monotonic
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from backend.classifier.service import make_classifier
+from backend.batch import BatchInputError, classify_rows, parse_tickets_csv
+from backend.reporting.workbook import workbook_bytes
 from backend.db import connection, init_db, record
 from backend.evaluation.metrics import calculate
 from backend.routing.engine import DEPARTMENTS, INTENTS, URGENCIES, decide
 
 ROOT = Path(__file__).resolve().parents[2]
 DATASET = ROOT / "dataset" / "tickets.csv"
+BALANCED_DATASET = ROOT / "dataset" / "tickets_balanced_50_50.csv"
+GITHUB_DATASET = ROOT / "dataset" / "github_issues_100.csv"
 classifier = make_classifier()
+inference_lock = Lock()
+batch_jobs_lock = Lock()
+batch_jobs: dict[str, dict] = {}
+
+
+def predict_one(ticket: dict) -> dict:
+    with inference_lock:
+        return classifier.predict(ticket)
+
+
+def predict_batch(rows: list[dict]) -> list[dict]:
+    with inference_lock:
+        return classify_rows(rows, classifier)
+
+
+def _update_batch_job(job_id: str, **changes) -> None:
+    with batch_jobs_lock:
+        batch_jobs[job_id].update(changes)
+
+
+def _batch_job_snapshot(job_id: str) -> dict:
+    with batch_jobs_lock:
+        job = batch_jobs.get(job_id)
+        if job is None:
+            raise HTTPException(404, "Batch job not found")
+        return {key: value for key, value in job.items() if key not in ("payload", "created_at")}
+
+
+def _run_batch_job(job_id: str, rows: list[dict]) -> None:
+    _update_batch_job(job_id, status="running")
+
+    def progress(processed: int, total: int, item: dict) -> None:
+        _update_batch_job(job_id, processed=processed, current_ticket=item["input"]["ticket_id"])
+
+    try:
+        with inference_lock:
+            results = classify_rows(rows, classifier, progress)
+        payload = workbook_bytes(results, "uploaded-tickets.csv")
+        _update_batch_job(job_id, status="complete", processed=len(rows), current_ticket="", payload=payload)
+    except Exception as exc:
+        _update_batch_job(job_id, status="failed", error=str(exc), current_ticket="")
 
 
 def now():
@@ -146,7 +194,7 @@ def create_ticket(payload: TicketIn):
 def classify_ticket(ticket_id: str):
     ticket = fetch_ticket(ticket_id)
     try:
-        prediction = classifier.predict(ticket)
+        prediction = predict_one(ticket)
     except Exception as exc:
         raise HTTPException(503, f"Laya inference unavailable: {exc}") from exc
     route = decide(prediction, ticket["customer_tier"], ticket["subject"] + " " + ticket["body"])
@@ -234,3 +282,88 @@ def evaluation():
 @app.get("/api/dataset.csv")
 def download_dataset():
     return FileResponse(DATASET, media_type="text/csv", filename="layadesk-sample-tickets.csv")
+
+
+@app.get("/api/dataset-balanced.csv")
+def download_balanced_dataset():
+    if not BALANCED_DATASET.is_file():
+        raise HTTPException(404, "Balanced sample has not been generated yet")
+    return FileResponse(BALANCED_DATASET, media_type="text/csv", filename="layadesk-balanced-50-50.csv")
+
+
+@app.get("/api/dataset-github.csv")
+def download_github_dataset():
+    if not GITHUB_DATASET.is_file():
+        raise HTTPException(404, "GitHub sample has not been generated yet")
+    return FileResponse(GITHUB_DATASET, media_type="text/csv", filename="layadesk-github-issues-100.csv")
+
+
+async def _read_batch_rows(request: Request) -> list[dict[str, str]]:
+    if os.getenv("LAYADESK_MODE", "laya").lower() != "laya":
+        raise HTTPException(409, "Batch Excel export requires Laya CUDA mode")
+    try:
+        import torch
+        if not torch.cuda.is_available():
+            raise HTTPException(503, "CUDA is unavailable")
+    except ImportError as exc:
+        raise HTTPException(503, "CUDA PyTorch is not installed") from exc
+    content = bytearray()
+    async for chunk in request.stream():
+        content.extend(chunk)
+        if len(content) > 3_000_000:
+            raise HTTPException(413, "CSV exceeds 3 MB")
+    try:
+        return parse_tickets_csv(bytes(content))
+    except BatchInputError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/batches/jobs", status_code=202)
+async def start_batch_job(request: Request):
+    rows = await _read_batch_rows(request)
+    job_id = uuid4().hex
+    with batch_jobs_lock:
+        expired = [key for key, job in batch_jobs.items()
+                   if job["status"] in ("complete", "failed") and monotonic() - job["created_at"] > 3600]
+        for key in expired:
+            del batch_jobs[key]
+        active = sum(job["status"] in ("pending", "running") for job in batch_jobs.values())
+        if active >= 2:
+            raise HTTPException(429, "Two batch jobs are already running; try again when one finishes")
+        batch_jobs[job_id] = {"job_id": job_id, "status": "pending", "processed": 0,
+                              "total": len(rows), "current_ticket": "", "error": None,
+                              "payload": None, "created_at": monotonic()}
+    Thread(target=_run_batch_job, args=(job_id, rows), daemon=True).start()
+    return _batch_job_snapshot(job_id)
+
+
+@app.get("/api/batches/jobs/{job_id}")
+def get_batch_job(job_id: str):
+    return _batch_job_snapshot(job_id)
+
+
+@app.get("/api/batches/jobs/{job_id}/download")
+def download_batch_job(job_id: str):
+    with batch_jobs_lock:
+        job = batch_jobs.get(job_id)
+        if job is None:
+            raise HTTPException(404, "Batch job not found")
+        if job["status"] == "failed":
+            raise HTTPException(503, job["error"] or "Batch job failed")
+        if job["status"] != "complete":
+            raise HTTPException(409, "Batch job is still processing")
+        payload = job["payload"]
+    return Response(payload, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    headers={"Content-Disposition": 'attachment; filename="LayaDesk_Batch_Report.xlsx"'})
+
+
+@app.post("/api/batches/classify")
+async def classify_batch(request: Request):
+    rows = await _read_batch_rows(request)
+    try:
+        results = await run_in_threadpool(predict_batch, rows)
+        payload = await run_in_threadpool(workbook_bytes, results, "uploaded-tickets.csv")
+    except Exception as exc:
+        raise HTTPException(503, f"Laya batch inference failed: {exc}") from exc
+    return Response(payload, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    headers={"Content-Disposition": 'attachment; filename="LayaDesk_Batch_Report.xlsx"'})
