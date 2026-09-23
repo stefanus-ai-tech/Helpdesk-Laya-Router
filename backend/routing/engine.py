@@ -38,11 +38,11 @@ def decide(prediction: dict[str, Any], customer_tier: str = "Standard", text: st
     if immediate:
         tags.append("enterprise-escalation")
 
-    if confidence < 0.60:
+    if confidence < 0.25:
         status = "NEEDS_REVIEW"
         gate = "manual_triage"
         queue = "Human Triage"
-    elif confidence < 0.85:
+    elif confidence < 0.45:
         status = "NEEDS_REVIEW"
         gate = "human_confirmation"
         queue = prediction["department"] + " · Confirm"
